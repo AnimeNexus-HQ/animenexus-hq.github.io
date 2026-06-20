@@ -3,39 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { background: #020617; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
+        body { background: #020617; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; font-family: sans-serif; }
         
-        /* 1. تأثير الدخول */
+        /* 1. تأثير الدخول المزخرف */
         #splash {
-            position: fixed; inset: 0; background: #000; z-index: 100;
+            position: fixed; inset: 0; background: #000; z-index: 999;
             display: flex; justify-content: center; align-items: center;
             animation: hideSplash 3s ease-out forwards;
         }
         @keyframes hideSplash { 70% { opacity: 1; } 100% { opacity: 0; pointer-events: none; } }
-        .logo-text { color: #00f0ff; font-size: 3rem; font-family: 'Oswald', sans-serif; text-shadow: 0 0 20px #00f0ff; }
+        .splash-logo { width: 400px; filter: drop-shadow(0 0 20px #6d28d9); }
 
-        /* 2. البطاقة (كما اعتمدناها) */
-        .hunter-card {
-            width: 450px; height: 250px; background: #e2e8f0; color: #000;
-            border-radius: 8px; padding: 20px; display: flex; gap: 20px; 
-            border: 4px solid #475569; box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        /* 2. البطاقة */
+        .id-card {
+            width: 500px; background: #f8fafc; color: #1e293b;
+            border-radius: 10px; padding: 20px; border: 2px solid #94a3b8;
+            display: grid; grid-template-columns: 120px 1fr; gap: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5); margin-top: 50px;
         }
-        .pic { width: 100px; height: 140px; background: #94a3b8; border: 2px solid #334155; border-radius: 4px; }
-        .data { flex: 1; text-align: right; font-family: sans-serif; }
+        .id-photo { width: 120px; height: 150px; background: #cbd5e1; border: 1px solid #64748b; }
+        .id-details h2 { margin: 0; font-size: 1.2rem; border-bottom: 1px solid #000; }
+        .grid-info { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .box { border: 1px solid #94a3b8; height: 25px; }
     </style>
 </head>
 <body>
 
-    <!-- مشهد الدخول -->
-    <div id="splash"><div class="logo-text">SOLO LEVELING</div></div>
+    <!-- مشهد الدخول المزخرف -->
+    <div id="splash">
+        <img src="https://upload.wikimedia.org/wikipedia/en/b/b3/Solo_Leveling_logo.png" class="splash-logo" alt="Solo Leveling">
+    </div>
 
     <!-- البطاقة -->
-    <div class="hunter-card">
-        <div class="pic"></div>
-        <div class="data">
-            <h3>HUNTER LICENSE</h3>
-            <p>الرتبة: <strong>S</strong></p>
-            <p>الاسم: Sung Jinwoo</p>
+    <div class="id-card">
+        <div class="id-photo"></div>
+        <div class="id-details">
+            <h2>Hunter's License</h2>
+            <p style="font-size: 0.8rem; margin: 5px 0;">License No: 401058132519</p>
+            <p><strong>Name:</strong> Sung Jinwoo</p>
+            <p><strong>Rank:</strong> S</p>
+            <div class="grid-info">
+                <div class="box"></div><div class="box"></div><div class="box"></div>
+                <div class="box"></div><div class="box"></div><div class="box" style="text-align:center; font-size:0.7rem;">Mage</div>
+            </div>
         </div>
     </div>
 
