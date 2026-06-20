@@ -3,35 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { background: #020617; display: flex; justify-content: center; padding-top: 50px; }
+        body { background: #020617; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
         
-        .hunter-card {
-            width: 450px; 
-            height: 250px; 
-            background: #e2e8f0; 
-            color: #000;
-            border-radius: 8px; 
-            padding: 20px;
-            display: flex; 
-            gap: 20px; 
-            border: 4px solid #475569;
-            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        /* 1. تأثير الدخول */
+        #splash {
+            position: fixed; inset: 0; background: #000; z-index: 100;
+            display: flex; justify-content: center; align-items: center;
+            animation: hideSplash 3s ease-out forwards;
         }
-        
-        .pic { 
-            width: 100px; 
-            height: 140px; 
-            background: #94a3b8; 
-            border: 2px solid #334155;
-            border-radius: 4px;
-        }
+        @keyframes hideSplash { 70% { opacity: 1; } 100% { opacity: 0; pointer-events: none; } }
+        .logo-text { color: #00f0ff; font-size: 3rem; font-family: 'Oswald', sans-serif; text-shadow: 0 0 20px #00f0ff; }
 
+        /* 2. البطاقة (كما اعتمدناها) */
+        .hunter-card {
+            width: 450px; height: 250px; background: #e2e8f0; color: #000;
+            border-radius: 8px; padding: 20px; display: flex; gap: 20px; 
+            border: 4px solid #475569; box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+        .pic { width: 100px; height: 140px; background: #94a3b8; border: 2px solid #334155; border-radius: 4px; }
         .data { flex: 1; text-align: right; font-family: sans-serif; }
-        .data h3 { margin: 0 0 10px 0; text-decoration: underline; }
     </style>
 </head>
 <body>
 
+    <!-- مشهد الدخول -->
+    <div id="splash"><div class="logo-text">SOLO LEVELING</div></div>
+
+    <!-- البطاقة -->
     <div class="hunter-card">
         <div class="pic"></div>
         <div class="data">
