@@ -1,3 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnimeNexus-HQ | Solo Leveling System</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --text-color: #c9d1d9;
+            --accent-color: #1f6feb;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family:  Segoe UI , Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 15px;
+            text-align: center;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        header {
+            padding: 20px;
+            background: linear-gradient(135deg, #1f6feb, #ff7b72);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        header h1 { margin: 0; color: #fff; font-size: 1.8rem; }
+        .mode-selection, .setup-form, .quiz-container, .result-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            margin: 10px 5px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+        .btn-secondary { background-color: #21262d; border: 1px solid var(--border-color); color: #8b949e; }
+        .input-group { margin-bottom: 15px; text-align: right; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #58a6ff; }
+        .input-group input, .input-group select {
+            width: 100%; padding: 10px; border-radius: 6px;
+            border: 1px solid var(--border-color); background-color: #0d1117;
+            color: white; box-sizing: border-box;
         }
         /* تصميم بطاقة الصياد الأسطورية */
         .hunter-card {
@@ -52,8 +114,8 @@
         <!-- الشاشة 1: اختيار الوضع -->
         <div id="modeScreen" class="mode-selection">
             <h3>اختر طريقة إصدار رخصة الصياد الخاصة بك:</h3>
-            <button class="btn" onclick="startMode('exam')">🛡️ دخول اختبار تقييم الرتبة (تحدي الأوتاكو)</button>
-            <button class="btn btn-secondary" onclick="startMode('custom')">📇 تصميم بطاقة فورية يدوياً (بدون اختبار)</button>
+            <button class="btn" onclick="startMode( exam )">🛡️ دخول اختبار تقييم الرتبة (تحدي الأوتاكو)</button>
+            <button class="btn btn-secondary" onclick="startMode( custom )">📇 تصميم بطاقة فورية يدوياً (بدون اختبار)</button>
         </div>
 
         <!-- الشاشة 2: استمارة البيانات المبدئية -->
@@ -143,20 +205,20 @@
             { q: "ما هي الفئة (Class) السحرية التي منحها النظام لسونغ جين وو في نهاية اختبار تغيير الوظيفة؟", o: ["السفاح (Assassin)", "الفارس الحارس (Guardian)", "مستدعي الأرواح (Necromancer)"], a: 2 },
             { q: "من هو قائد الغارة الخائن من الرتبة C الذي حاول التخلص من سونغ جين وو ويو جين هو داخل الكهف؟", o: ["هوانغ دونغ-سو", "هوانغ دونغ-سوك", "كانغ تاي-شيك"], a: 1 },
             { q: "ما هي الأداة التي استخدمها رئيس الجمعية لإعادة قياس طاقة سونغ جين وو والتأكد من رتبته الأسطورية؟", o: ["بلورة زجاجية سحرية لقياس المانا", "جهاز كمبيوتر رقمي مطور", "عداد طاقة محمول"], a: 0 },
-            { q: "ما هي الرتبة الرسمية الممنوحة للصياد الوفي 'يو جين هو' الذي يرافق بطلنا دائماً؟", o: ["الرتبة E", "الرتبة D", "الرتبة C"], a: 1 },
+            { q: "ما هي الرتبة الرسمية الممنوحة للصياد الوفي  يو جين هو  الذي يرافق بطلنا دائماً؟", o: ["الرتبة E", "الرتبة D", "الرتبة C"], a: 1 },
             { q: "ما هو اسم أول ظل من فئة الفرسان استخرجه سونغ جين وو بنجاح بعد قتال ملحمي؟", o: ["تانك (Tank)", "أيرون (Iron)", "إيغريس (Igris)"], a: 2 },
-            { q: "ما هي رتبة الصياد 'هوانغ دونغ-سو' الغاضب في أمريكا والذي يريد الانتقام لمقتل أخيه؟", o: ["الرتبة S", "الرتبة A+", "مستوى صياد وطني S++"], a: 0 },
-            { q: "ما هو الكائن المرعب ذو الرؤوس الثلاثة الذي واجهه البطل كحارس لبوابة قبو 'قلعة الشيطان'؟", o: ["التنين الكريستالي", "سيربيروس (Cerberus)", "ملك العمالقة"], a: 1 }
+            { q: "ما هي رتبة الصياد  هوانغ دونغ-سو  الغاضب في أمريكا والذي يريد الانتقام لمقتل أخيه؟", o: ["الرتبة S", "الرتبة A+", "مستوى صياد وطني S++"], a: 0 },
+            { q: "ما هو الكائن المرعب ذو الرؤوس الثلاثة الذي واجهه البطل كحارس لبوابة قبو  قلعة الشيطان ؟", o: ["التنين الكريستالي", "سيربيروس (Cerberus)", "ملك العمالقة"], a: 1 }
         ];
 
-        let currentMode = '';
+        let currentMode =   ;
         let selectedQuestions = [];
         let currentQuestionIdx = 0;
         let score = 0;
-        let userPhotoData = '';
+        let userPhotoData =   ;
 
         // التعامل مع رفع الصورة وتحويلها لرابط محلي داخل المتصفح
-        document.getElementById('hunterPhoto').addEventListener('change', function(e) {
+        document.getElementById( hunterPhoto ).addEventListener( change , function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
@@ -167,30 +229,30 @@
 
         function startMode(mode) {
             currentMode = mode;
-            document.getElementById('modeScreen').classList.add('hidden');
-            document.getElementById('formScreen').classList.remove('hidden');
-            if(mode === 'custom') {
-                document.getElementById('formTitle').innerText = "قم بصياغة رخصتك المخصصة بنفسك";
-                document.getElementById('customFields').classList.remove('hidden');
+            document.getElementById( modeScreen ).classList.add( hidden );
+            document.getElementById( formScreen ).classList.remove( hidden );
+            if(mode ===  custom ) {
+                document.getElementById( formTitle ).innerText = "قم بصياغة رخصتك المخصصة بنفسك";
+                document.getElementById( customFields ).classList.remove( hidden );
             } else {
-                document.getElementById('formTitle').innerText = "سجل بياناتك قبل دخول اختبار التقييم";
-                document.getElementById('customFields').classList.add('hidden');
+                document.getElementById( formTitle ).innerText = "سجل بياناتك قبل دخول اختبار التقييم";
+                document.getElementById( customFields ).classList.add( hidden );
             }
         }
 
         function goBack() {
-            document.getElementById('formScreen').classList.add('hidden');
-            document.getElementById('modeScreen').classList.remove('hidden');
+            document.getElementById( formScreen ).classList.add( hidden );
+            document.getElementById( modeScreen ).classList.remove( hidden );
         }
 
         function processForm() {
-            const name = document.getElementById('hunterName').value.trim();
-            const country = document.getElementById('hunterCountry').value.trim();
+            const name = document.getElementById( hunterName ).value.trim();
+            const country = document.getElementById( hunterCountry ).value.trim();
             if(!name || !country) { alert("رجاءً، املأ خانة الاسم والبلد لإصدار السجل!"); return; }
 
-            document.getElementById('formScreen').classList.add('hidden');
+            document.getElementById( formScreen ).classList.add( hidden );
 
-            if(currentMode === 'custom') {
+            if(currentMode ===  custom ) {
                 generateCustomCard();
             } else {
                 startQuiz();
@@ -198,10 +260,10 @@
         }
 
         function generateCustomCard() {
-            const name = document.getElementById('hunterName').value;
-            const country = document.getElementById('hunterCountry').value;
-            const hClass = document.getElementById('hunterClass').value;
-            const rank = document.getElementById('hunterRank').value;
+            const name = document.getElementById( hunterName ).value;
+            const country = document.getElementById( hunterCountry ).value;
+            const hClass = document.getElementById( hunterClass ).value;
+            const rank = document.getElementById( hunterRank ).value;
 
             displayCard(name, country, hClass, rank, "GUEST-" + Math.floor(1000 + Math.random() * 9000), "custom");
         }
@@ -212,7 +274,7 @@
             selectedQuestions = shuffled.slice(0, 7);
             currentQuestionIdx = 0;
             score = 0;
-            document.getElementById('quizScreen').classList.remove('hidden');
+            document.getElementById( quizScreen ).classList.remove( hidden );
             showQuestion();
         }
 
@@ -221,16 +283,16 @@
                 evaluateQuizResults();
                 return;
             }
-            document.getElementById('questionNum').innerText = `السؤال: ${currentQuestionIdx + 1}/7`;
+            document.getElementById( questionNum ).innerText = `السؤال: ${currentQuestionIdx + 1}/7`;
             const qData = selectedQuestions[currentQuestionIdx];
-            document.getElementById('questionText').innerText = qData.q;
+            document.getElementById( questionText ).innerText = qData.q;
             
-            const optionsDiv = document.getElementById('optionsContainer');
-            optionsDiv.innerHTML = '';
+            const optionsDiv = document.getElementById( optionsContainer );
+            optionsDiv.innerHTML =   ;
             
             qData.o.forEach((opt, idx) => {
-                const box = document.createElement('div');
-                box.className = 'option-box';
+                const box = document.createElement( div );
+                box.className =  option-box ;
                 box.innerText = opt;
                 box.onclick = () => handleAnswer(idx);
                 optionsDiv.appendChild(box);
@@ -244,67 +306,67 @@
         }
 
         function evaluateQuizResults() {
-            document.getElementById('quizScreen').classList.add('hidden');
-            const name = document.getElementById('hunterName').value;
-            const country = document.getElementById('hunterCountry').value;
+            document.getElementById( quizScreen ).classList.add( hidden );
+            const name = document.getElementById( hunterName ).value;
+            const country = document.getElementById( hunterCountry ).value;
             
-            let rank = 'E';
-            let hClass = 'مقاتل (Fighter)';
+            let rank =  E ;
+            let hClass =  مقاتل (Fighter) ;
             
             // احتساب الرتبة بناءً على عدد الإجابات الصحيحة في النظام الصارم
-            if(score === 7) { rank = 'S++'; hClass = 'مستدعي أرواح (Necromancer) 👑'; }
-            else if(score === 6) { rank = 'S'; hClass = 'سفاح (Assassin)'; }
-            else if(score === 5) { rank = 'A+'; hClass = 'ساحر (Mage)'; }
-            else if(score === 4) { rank = 'B'; hClass = 'مقاتل (Fighter)'; }
-            else if(score === 3) { rank = 'C'; hClass = 'معالج (Healer)'; }
-            else if(score === 2) { rank = 'D'; hClass = 'مقاتل (Fighter)'; }
-            else { rank = 'E'; hClass = 'صياد مبتدئ'; }
+            if(score === 7) { rank =  S++ ; hClass =  مستدعي أرواح (Necromancer) 👑 ; }
+            else if(score === 6) { rank =  S ; hClass =  سفاح (Assassin) ; }
+            else if(score === 5) { rank =  A+ ; hClass =  ساحر (Mage) ; }
+            else if(score === 4) { rank =  B ; hClass =  مقاتل (Fighter) ; }
+            else if(score === 3) { rank =  C ; hClass =  معالج (Healer) ; }
+            else if(score === 2) { rank =  D ; hClass =  مقاتل (Fighter) ; }
+            else { rank =  E ; hClass =  صياد مبتدئ ; }
 
             displayCard(name, country, hClass, rank, "EXAM-" + Math.floor(1000 + Math.random() * 9000), "exam");
         }
 
         function displayCard(name, country, hClass, rank, id, type) {
-            document.getElementById('resultScreen').classList.remove('hidden');
+            document.getElementById( resultScreen ).classList.remove( hidden );
             
-            document.getElementById('cardName').innerText = name;
-            document.getElementById('cardCountry').innerText = country;
-            document.getElementById('cardClass').innerText = hClass;
-            document.getElementById('cardID').innerText = id;
-            document.getElementById('cardRank').innerText = rank;
+            document.getElementById( cardName ).innerText = name;
+            document.getElementById( cardCountry ).innerText = country;
+            document.getElementById( cardClass ).innerText = hClass;
+            document.getElementById( cardID ).innerText = id;
+            document.getElementById( cardRank ).innerText = rank;
 
-            const cardElement = document.getElementById('finalCard');
-            const stampElement = document.getElementById('cardStamp');
+            const cardElement = document.getElementById( finalCard );
+            const stampElement = document.getElementById( cardStamp );
             
             // تطبيق الميزات البصرية حسب النوع والرتبة
-            if(rank.includes('S')) {
-                cardElement.className = 'hunter-card rank-S';
+            if(rank.includes( S )) {
+                cardElement.className =  hunter-card rank-S ;
             } else {
-                cardElement.className = 'hunter-card';
+                cardElement.className =  hunter-card ;
             }
 
-            if(type === 'custom') {
+            if(type ===  custom ) {
                 stampElement.innerText = "بطاقة هواة مخصصة";
                 stampElement.className = "stamp guest";
-                document.getElementById('feedbackText').innerHTML = `أهلاً بك يا صياد <strong>${name}</strong>. لقد قمت بتصميم بطاقتك الشخصية بنجاح وفقاً لتفضيلاتك الخاصة!`;
+                document.getElementById( feedbackText ).innerHTML = `أهلاً بك يا صياد <strong>${name}</strong>. لقد قمت بتصميم بطاقتك الشخصية بنجاح وفقاً لتفضيلاتك الخاصة!`;
             } else {
                 stampElement.innerText = "صياد معتمد بالنظام";
                 stampElement.className = "stamp";
                 
-                let feedback = '';
+                let feedback =   ;
                 if(score >= 6) {
                     feedback = `👑 <strong>مبهر!!</strong> لقد جاوبت على ${score} أسئلة صحيحة وتجاوزت حدود البشر. النظام يعلن الصياد <strong>${name}</strong> رسمياً برتبة أسطورية! جنود الظلال الآن تنحني لك..`;
                 } else if(score >= 4) {
                     feedback = `⚡ <strong>أداء جيد جداً!</strong> إجاباتك الصحيحة (${score}/7) جعلتك قوة لا يستهان بها في الغارات المتقدمة، لكن طموحك يجب أن يلامس السماء. تدرب أكثر ونظف البوابات القادمة!`;
                 } else {
-                    feedback = `⚠️ <strong>لا بأس يا مقتحم الصعاب!</strong> تذكر أن الصياد 'سونغ جين وو' نفسه بدأ من الرتبة E كأضعف صياد في البشرية. نراكم مرة أخرى بعد أن تتدربوا جيداً في غارات الأقبية! ⚔️`;
+                    feedback = `⚠️ <strong>لا بأس يا مقتحم الصعاب!</strong> تذكر أن الصياد  سونغ جين وو  نفسه بدأ من الرتبة E كأضعف صياد في البشرية. نراكم مرة أخرى بعد أن تتدربوا جيداً في غارات الأقبية! ⚔️`;
                 }
-                document.getElementById('feedbackText').innerHTML = feedback;
+                document.getElementById( feedbackText ).innerHTML = feedback;
             }
 
             // وضع الصورة الشخصية المرفوعة
-            const photoDiv = document.getElementById('cardPhotoDisplay');
+            const photoDiv = document.getElementById( cardPhotoDisplay );
             if(userPhotoData) {
-                photoDiv.style.backgroundImage = `url('${userPhotoData}')`;
+                photoDiv.style.backgroundImage = `url( ${userPhotoData} )`;
             } else {
                 photoDiv.style.backgroundImage = "none";
                 photoDiv.innerText = "📸 بدون صورة";
