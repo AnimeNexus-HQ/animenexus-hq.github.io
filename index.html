@@ -15,15 +15,19 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            background-image: radial-gradient(circle at 30% 20%, #1a1040 0%, #0a0a0f 70%);
+            transition: background 0.6s ease;
         }
+        body.welcome-bg { background: radial-gradient(circle at 30% 20%, #1a1040 0%, #0a0a0f 70%); }
+        body.quiz-bg { background: radial-gradient(circle at 70% 50%, #0f1a2e 0%, #050510 70%); }
+        body.result-bg { background: radial-gradient(circle at 50% 50%, #2a1635 0%, #0a0a0f 70%); }
+
         .container {
             width: 100%;
             max-width: 750px;
             background: rgba(20, 20, 40, 0.85);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(18px);
             border-radius: 30px;
-            padding: 40px 30px;
+            padding: 35px 25px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(100, 50, 255, 0.3);
             border: 1px solid rgba(150, 100, 255, 0.25);
             transition: all 0.3s ease;
@@ -34,14 +38,14 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 800;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
         }
-        h1 { font-size: 2.8rem; }
-        h2 { font-size: 1.8rem; margin-top: 10px; }
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 1.6rem; margin-top: 8px; }
         .screen {
             display: none;
-            animation: fadeSlide 0.5s ease forwards;
+            animation: fadeSlide 0.45s ease forwards;
         }
         .screen.active { display: block; }
         @keyframes fadeSlide {
@@ -51,14 +55,14 @@
         .btn {
             display: block;
             width: 100%;
-            padding: 16px;
-            margin: 12px 0;
+            padding: 15px;
+            margin: 10px 0;
             background: rgba(30, 30, 50, 0.8);
             border: 2px solid #8b5cf6;
             color: #e0e0ff;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
-            border-radius: 20px;
+            border-radius: 18px;
             cursor: pointer;
             transition: all 0.25s ease;
             text-align: center;
@@ -67,38 +71,45 @@
         .btn:hover {
             background: #8b5cf6;
             color: #fff;
-            box-shadow: 0 0 25px #8b5cf6aa;
+            box-shadow: 0 0 20px #8b5cf6aa;
             transform: scale(1.02);
         }
         .btn.selected {
             background: #7c3aed;
             border-color: #c084fc;
-            box-shadow: 0 0 30px #a78bfa;
+            box-shadow: 0 0 25px #a78bfa;
         }
         .options-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
-            margin: 20px 0;
+            gap: 10px;
+            margin: 18px 0;
         }
         .quiz-question {
-            margin: 35px 0;
-            padding: 20px;
+            margin: 25px 0;
+            padding: 18px;
             background: rgba(255,255,255,0.03);
-            border-radius: 18px;
-            border-right: 5px solid #8b5cf6;
+            border-radius: 16px;
+            border-right: 4px solid #8b5cf6;
         }
         .question-text {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            font-size: 1.15rem;
+            margin-bottom: 18px;
             font-weight: 600;
+        }
+        .question-counter {
+            text-align: center;
+            color: #b0b0ff;
+            margin: 8px 0 16px;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
         }
         .progress-bar {
             width: 100%;
-            height: 10px;
+            height: 8px;
             background: #2a2a40;
             border-radius: 20px;
-            margin: 25px 0;
+            margin: 15px 0 10px;
             overflow: hidden;
         }
         .progress-fill {
@@ -110,226 +121,247 @@
         }
         .result-card {
             text-align: center;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.35);
             border-radius: 24px;
-            padding: 35px 20px;
+            padding: 30px 18px;
             margin-top: 20px;
             border: 1px solid #4c1d95;
         }
         .result-card img {
-            width: 180px;
-            height: 180px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid #8b5cf6;
             box-shadow: 0 0 35px #8b5cf6aa;
-            margin: 20px auto;
+            margin: 18px auto;
             display: block;
         }
         .mbti-badge {
             display: inline-block;
             background: #8b5cf6;
             color: white;
-            padding: 10px 30px;
+            padding: 8px 28px;
             border-radius: 40px;
             font-size: 2rem;
             font-weight: bold;
             letter-spacing: 3px;
-            margin: 15px 0;
+            margin: 10px 0;
         }
         .character-name {
-            font-size: 2.2rem;
+            font-size: 2.1rem;
             background: linear-gradient(135deg, #f0e68c, #ffd700);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 800;
-            margin: 15px 0;
+            margin: 10px 0 5px;
         }
-        .small-note {
-            color: #aaa;
-            font-size: 0.85rem;
-            margin: 8px 0;
+        .explain-text {
+            color: #ccc;
+            font-size: 0.95rem;
+            margin: 16px 0;
+            line-height: 1.6;
+            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 14px;
         }
-        .flex-row {
+        .share-buttons {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
             flex-wrap: wrap;
+            margin-top: 18px;
         }
+        .share-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #8b5cf6;
+            color: #e0e0ff;
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .share-btn:hover { background: #8b5cf6; color: white; }
+        .small-note { color: #aaa; font-size: 0.8rem; margin: 6px 0; }
+        .flex-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
         @media (max-width: 500px) {
             .container { padding: 20px 15px; }
-            h1 { font-size: 2rem; }
-            .btn { font-size: 1rem; padding: 12px; }
+            h1 { font-size: 1.8rem; }
+            .btn { font-size: 0.95rem; padding: 12px; }
         }
     </style>
 </head>
-<body>
+<body class="welcome-bg">
     <div class="container" id="app">
-        <!-- الشاشات سيتم توليدها ديناميكياً -->
+        <!-- المحتوى الديناميكي -->
     </div>
 
     <script>
-        // ======================= بيانات الأنميات والشخصيات =======================
+        // ======================= بيانات الأنميات والشخصيات (مع الإنجليزية) =======================
         const animeData = {
-            "ون بيس": {
+            "ون بيس - One Piece": {
                 male: [
-                    { name: "مونكي دي لوفي", mbti: "ESFP", desc: "المغامر الشجاع", img: "https://via.placeholder.com/300/FFD700/000000?text=Luffy", scores: [90,5,95,70,40] },
-                    { name: "رورونوا زورو", mbti: "ISTP", desc: "المقاتل الصامد", img: "https://via.placeholder.com/300/228B22/FFFFFF?text=Zoro", scores: [40,20,70,95,80] },
-                    { name: "فينسموك سانجي", mbti: "ESFJ", desc: "الطباخ الشهم", img: "https://via.placeholder.com/300/1E90FF/FFFFFF?text=Sanji", scores: [70,50,85,40,30] },
-                    { name: "ترافلجار لاو", mbti: "INTJ", desc: "الاستراتيجي البارد", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Law", scores: [10,95,25,80,90] },
-                    { name: "بورتغاس دي إيس", mbti: "ENFJ", desc: "الأخ النبيل", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=Ace", scores: [80,30,75,85,20] },
-                    { name: "سيلفرز رايلي", mbti: "INFJ", desc: "الحكيم الهادئ", img: "https://via.placeholder.com/300/708090/FFFFFF?text=Rayleigh", scores: [20,88,40,60,95] },
-                    { name: "كروكودايل", mbti: "ENTJ", desc: "القائد الطموح", img: "https://via.placeholder.com/300/B8860B/000000?text=Crocodile", scores: [50,85,70,95,15] },
-                    { name: "باجي المهرج", mbti: "ESTP", desc: "المخادع الجريء", img: "https://via.placeholder.com/300/FF0000/FFFFFF?text=Buggy", scores: [95,10,90,45,60] }
+                    { name: "مونكي دي لوفي", mbti: "ESFP", desc: "المغامر الشجاع", img: "https://via.placeholder.com/300/FFD700/000000?text=لوفي", scores: [90,5,95,70,40] },
+                    { name: "رورونوا زورو", mbti: "ISTP", desc: "المقاتل الصامد", img: "https://via.placeholder.com/300/228B22/FFFFFF?text=زورو", scores: [40,20,70,95,80] },
+                    { name: "فينسموك سانجي", mbti: "ESFJ", desc: "الطباخ الشهم", img: "https://via.placeholder.com/300/1E90FF/FFFFFF?text=سانجي", scores: [70,50,85,40,30] },
+                    { name: "ترافلجار لاو", mbti: "INTJ", desc: "الاستراتيجي البارد", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=لاو", scores: [10,95,25,80,90] },
+                    { name: "بورتغاس دي إيس", mbti: "ENFJ", desc: "الأخ النبيل", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=إيس", scores: [80,30,75,85,20] },
+                    { name: "سيلفرز رايلي", mbti: "INFJ", desc: "الحكيم الهادئ", img: "https://via.placeholder.com/300/708090/FFFFFF?text=رايلي", scores: [20,88,40,60,95] },
+                    { name: "كروكودايل", mbti: "ENTJ", desc: "القائد الطموح", img: "https://via.placeholder.com/300/B8860B/000000?text=كروكودايل", scores: [50,85,70,95,15] },
+                    { name: "باجي المهرج", mbti: "ESTP", desc: "المخادع الجريء", img: "https://via.placeholder.com/300/FF0000/FFFFFF?text=باجي", scores: [95,10,90,45,60] }
                 ],
                 female: [
-                    { name: "نامي", mbti: "ESTJ", desc: "الملاحة العملية", img: "https://via.placeholder.com/300/FFA500/000000?text=Nami", scores: [45,85,70,40,25] },
-                    { name: "نيكو روبين", mbti: "INTJ", desc: "العالمة الغامضة", img: "https://via.placeholder.com/300/800080/FFFFFF?text=Robin", scores: [15,98,30,70,92] },
-                    { name: "بوا هانكوك", mbti: "ENTJ", desc: "الإمبراطورة الواثقة", img: "https://via.placeholder.com/300/FF69B4/000000?text=Hancock", scores: [80,60,95,90,40] },
-                    { name: "نيفرتاري فيفي", mbti: "ENFJ", desc: "الأميرة المخلصة", img: "https://via.placeholder.com/300/00BFFF/000000?text=Vivi", scores: [70,45,75,95,55] },
-                    { name: "كارو", mbti: "ISFJ", desc: "الحامية الوفية", img: "https://via.placeholder.com/300/FFB6C1/000000?text=Carrot", scores: [30,70,50,90,70] },
-                    { name: "شيرلي", mbti: "ISTJ", desc: "الهادئة العملية", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=Shirley", scores: [20,80,25,60,88] },
-                    { name: "أوتاما", mbti: "ESFP", desc: "المتفائلة النشطة", img: "https://via.placeholder.com/300/FFD700/000000?text=Otama", scores: [85,15,92,65,30] },
-                    { name: "جول دي روجر", mbti: "INFJ", desc: "الحالمة الملهمة", img: "https://via.placeholder.com/300/DA70D6/000000?text=Rouge", scores: [25,90,35,80,85] }
+                    { name: "نامي", mbti: "ESTJ", desc: "الملاحة العملية", img: "https://via.placeholder.com/300/FFA500/000000?text=نامي", scores: [45,85,70,40,25] },
+                    { name: "نيكو روبين", mbti: "INTJ", desc: "العالمة الغامضة", img: "https://via.placeholder.com/300/800080/FFFFFF?text=روبين", scores: [15,98,30,70,92] },
+                    { name: "بوا هانكوك", mbti: "ENTJ", desc: "الإمبراطورة الواثقة", img: "https://via.placeholder.com/300/FF69B4/000000?text=هانكوك", scores: [80,60,95,90,40] },
+                    { name: "نيفرتاري فيفي", mbti: "ENFJ", desc: "الأميرة المخلصة", img: "https://via.placeholder.com/300/00BFFF/000000?text=فيفي", scores: [70,45,75,95,55] },
+                    { name: "كارو", mbti: "ISFJ", desc: "الحامية الوفية", img: "https://via.placeholder.com/300/FFB6C1/000000?text=كارو", scores: [30,70,50,90,70] },
+                    { name: "شيرلي", mbti: "ISTJ", desc: "الهادئة العملية", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=شيرلي", scores: [20,80,25,60,88] },
+                    { name: "أوتاما", mbti: "ESFP", desc: "المتفائلة النشطة", img: "https://via.placeholder.com/300/FFD700/000000?text=أوتاما", scores: [85,15,92,65,30] },
+                    { name: "جول دي روجر", mbti: "INFJ", desc: "الحالمة الملهمة", img: "https://via.placeholder.com/300/DA70D6/000000?text=روجر", scores: [25,90,35,80,85] }
                 ]
             },
-            "ناروتو": {
+            "ناروتو - Naruto": {
                 male: [
-                    { name: "أوزوماكي ناروتو", mbti: "ESFP", desc: "النابض بالحياة", img: "https://via.placeholder.com/300/FF8C00/000000?text=Naruto", scores: [92,8,98,75,25] },
-                    { name: "أوتشيها ساسكي", mbti: "INTJ", desc: "المنتقم البارد", img: "https://via.placeholder.com/300/191970/FFFFFF?text=Sasuke", scores: [10,95,20,85,95] },
-                    { name: "هاتاكي كاكاشي", mbti: "INTP", desc: "الهادئ العبقري", img: "https://via.placeholder.com/300/778899/FFFFFF?text=Kakashi", scores: [15,92,25,65,90] },
-                    { name: "روك لي", mbti: "ESTJ", desc: "المثابر القوي", img: "https://via.placeholder.com/300/32CD32/000000?text=Lee", scores: [55,15,85,98,20] },
-                    { name: "شيكامارو نارا", mbti: "INTP", desc: "الاستراتيجي الكسول", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=Shikamaru", scores: [5,99,10,45,80] },
-                    { name: "غارا", mbti: "INFJ", desc: "المنعزل الحكيم", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Gaara", scores: [20,80,30,70,88] },
-                    { name: "جيرايا", mbti: "ENFP", desc: "الناسك المرح", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=Jiraiya", scores: [88,40,85,50,20] },
-                    { name: "مينato ناميكازي", mbti: "ENFJ", desc: "البطل المتواضع", img: "https://via.placeholder.com/300/FFD700/000000?text=Minato", scores: [75,65,80,90,60] }
+                    { name: "أوزوماكي ناروتو", mbti: "ESFP", desc: "النابض بالحياة", img: "https://via.placeholder.com/300/FF8C00/000000?text=ناروتو", scores: [92,8,98,75,25] },
+                    { name: "أوتشيها ساسكي", mbti: "INTJ", desc: "المنتقم البارد", img: "https://via.placeholder.com/300/191970/FFFFFF?text=ساسكي", scores: [10,95,20,85,95] },
+                    { name: "هاتاكي كاكاشي", mbti: "INTP", desc: "الهادئ العبقري", img: "https://via.placeholder.com/300/778899/FFFFFF?text=كاكاشي", scores: [15,92,25,65,90] },
+                    { name: "روك لي", mbti: "ESTJ", desc: "المثابر القوي", img: "https://via.placeholder.com/300/32CD32/000000?text=لي", scores: [55,15,85,98,20] },
+                    { name: "شيكامارو نارا", mbti: "INTP", desc: "الاستراتيجي الكسول", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=شيكامارو", scores: [5,99,10,45,80] },
+                    { name: "غارا", mbti: "INFJ", desc: "المنعزل الحكيم", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=غارا", scores: [20,80,30,70,88] },
+                    { name: "جيرايا", mbti: "ENFP", desc: "الناسك المرح", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=جيرايا", scores: [88,40,85,50,20] },
+                    { name: "ميناتو ناميكازي", mbti: "ENFJ", desc: "البطل المتواضع", img: "https://via.placeholder.com/300/FFD700/000000?text=ميناتو", scores: [75,65,80,90,60] }
                 ],
                 female: [
-                    { name: "هارونو ساكورا", mbti: "ESFJ", desc: "القوية الحنونة", img: "https://via.placeholder.com/300/FF1493/FFFFFF?text=Sakura", scores: [70,45,80,80,35] },
-                    { name: "هيناتا هيوغا", mbti: "ISFJ", desc: "الخجولة الوفية", img: "https://via.placeholder.com/300/9370DB/FFFFFF?text=Hinata", scores: [25,80,35,98,75] },
-                    { name: "تسونادي", mbti: "ESTJ", desc: "القائدة الصارمة", img: "https://via.placeholder.com/300/FFD700/000000?text=Tsunade", scores: [60,75,85,70,30] },
-                    { name: "كونان", mbti: "INTJ", desc: "الهادئة الحازمة", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Konan", scores: [15,90,25,65,92] },
-                    { name: "تيماري", mbti: "ESTP", desc: "الجريئة الحادة", img: "https://via.placeholder.com/300/DAA520/000000?text=Temari", scores: [90,20,88,60,40] },
-                    { name: "إينو ياماناكا", mbti: "ESFP", desc: "المرحة الاجتماعية", img: "https://via.placeholder.com/300/FF69B4/000000?text=Ino", scores: [85,15,92,65,20] },
-                    { name: "كوريناي", mbti: "INFJ", desc: "الحكيمة الحنونة", img: "https://via.placeholder.com/300/DC143C/FFFFFF?text=Kurenai", scores: [30,85,45,88,80] },
-                    { name: "شيزوني", mbti: "ISFJ", desc: "المخلصة الهادئة", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=Shizune", scores: [20,75,30,85,78] }
+                    { name: "هارونو ساكورا", mbti: "ESFJ", desc: "القوية الحنونة", img: "https://via.placeholder.com/300/FF1493/FFFFFF?text=ساكورا", scores: [70,45,80,80,35] },
+                    { name: "هيناتا هيوغا", mbti: "ISFJ", desc: "الخجولة الوفية", img: "https://via.placeholder.com/300/9370DB/FFFFFF?text=هيناتا", scores: [25,80,35,98,75] },
+                    { name: "تسونادي", mbti: "ESTJ", desc: "القائدة الصارمة", img: "https://via.placeholder.com/300/FFD700/000000?text=تسونادي", scores: [60,75,85,70,30] },
+                    { name: "كونان", mbti: "INTJ", desc: "الهادئة الحازمة", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=كونان", scores: [15,90,25,65,92] },
+                    { name: "تيماري", mbti: "ESTP", desc: "الجريئة الحادة", img: "https://via.placeholder.com/300/DAA520/000000?text=تيماري", scores: [90,20,88,60,40] },
+                    { name: "إينو ياماناكا", mbti: "ESFP", desc: "المرحة الاجتماعية", img: "https://via.placeholder.com/300/FF69B4/000000?text=إينو", scores: [85,15,92,65,20] },
+                    { name: "كوريناي", mbti: "INFJ", desc: "الحكيمة الحنونة", img: "https://via.placeholder.com/300/DC143C/FFFFFF?text=كوريناي", scores: [30,85,45,88,80] },
+                    { name: "شيزوني", mbti: "ISFJ", desc: "المخلصة الهادئة", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=شيزوني", scores: [20,75,30,85,78] }
                 ]
             },
-            "هجوم العمالقة": {
+            "هجوم العمالقة - AOT": {
                 male: [
-                    { name: "ليفاي أكرمان", mbti: "ISTP", desc: "الجندي البارد", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=Levi", scores: [35,20,65,95,85] },
-                    { name: "إرين ييغر", mbti: "ENTJ", desc: "الثائر العازم", img: "https://via.placeholder.com/300/006400/FFFFFF?text=Eren", scores: [80,55,90,98,10] },
-                    { name: "أرمين أرليرت", mbti: "INTP", desc: "المفكر الحساس", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=Armin", scores: [10,95,15,30,80] },
-                    { name: "جان كيرشتاين", mbti: "ESTJ", desc: "الواقعي القيادي", img: "https://via.placeholder.com/300/DAA520/000000?text=Jean", scores: [65,45,80,60,30] },
-                    { name: "كوني سبرينغر", mbti: "ESFP", desc: "المرح المخلص", img: "https://via.placeholder.com/300/FF8C00/000000?text=Connie", scores: [90,10,88,70,40] },
-                    { name: "زيك ييغر", mbti: "INTJ", desc: "الاستراتيجي الغامض", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Zeke", scores: [25,92,20,88,90] },
-                    { name: "راينر براون", mbti: "ISFJ", desc: "الممزق الوفي", img: "https://via.placeholder.com/300/B8860B/000000?text=Reiner", scores: [40,70,45,80,65] },
-                    { name: "إروين سميث", mbti: "ENTJ", desc: "القائد الملهم", img: "https://via.placeholder.com/300/FFD700/000000?text=Erwin", scores: [70,85,80,95,50] }
+                    { name: "ليفاي أكرمان", mbti: "ISTP", desc: "الجندي البارد", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=ليفاي", scores: [35,20,65,95,85] },
+                    { name: "إرين ييغر", mbti: "ENTJ", desc: "الثائر العازم", img: "https://via.placeholder.com/300/006400/FFFFFF?text=إرين", scores: [80,55,90,98,10] },
+                    { name: "أرمين أرليرت", mbti: "INTP", desc: "المفكر الحساس", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=أرمين", scores: [10,95,15,30,80] },
+                    { name: "جان كيرشتاين", mbti: "ESTJ", desc: "الواقعي القيادي", img: "https://via.placeholder.com/300/DAA520/000000?text=جان", scores: [65,45,80,60,30] },
+                    { name: "كوني سبرينغر", mbti: "ESFP", desc: "المرح المخلص", img: "https://via.placeholder.com/300/FF8C00/000000?text=كوني", scores: [90,10,88,70,40] },
+                    { name: "زيك ييغر", mbti: "INTJ", desc: "الاستراتيجي الغامض", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=زيك", scores: [25,92,20,88,90] },
+                    { name: "راينر براون", mbti: "ISFJ", desc: "الممزق الوفي", img: "https://via.placeholder.com/300/B8860B/000000?text=راينر", scores: [40,70,45,80,65] },
+                    { name: "إروين سميث", mbti: "ENTJ", desc: "القائد الملهم", img: "https://via.placeholder.com/300/FFD700/000000?text=إروين", scores: [70,85,80,95,50] }
                 ],
                 female: [
-                    { name: "ميكاسا أكرمان", mbti: "ISTJ", desc: "المقاتلة الوفية", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Mikasa", scores: [20,80,30,98,85] },
-                    { name: "هيستوريا ريس", mbti: "ENFJ", desc: "الملكة الرحيمة", img: "https://via.placeholder.com/300/FF69B4/000000?text=Historia", scores: [60,50,75,90,40] },
-                    { name: "آني ليونهارت", mbti: "ISTP", desc: "المنعزلة القوية", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Annie", scores: [15,30,55,92,85] },
-                    { name: "ساشا براوس", mbti: "ESFP", desc: "الشرهة المرحة", img: "https://via.placeholder.com/300/32CD32/000000?text=Sasha", scores: [88,10,95,65,25] },
-                    { name: "هانجي زوي", mbti: "ENTP", desc: "العالمة المجنونة", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=Hange", scores: [75,90,80,40,35] },
-                    { name: "بيك فينغر", mbti: "INTJ", desc: "الهادئة الاستراتيجية", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=Pieck", scores: [15,88,20,70,92] },
-                    { name: "غابي براون", mbti: "ESTJ", desc: "المندفعة العنيدة", img: "https://via.placeholder.com/300/B22222/FFFFFF?text=Gabi", scores: [85,15,92,60,20] },
-                    { name: "فريدا ريس", mbti: "INFJ", desc: "الغامضة النبيلة", img: "https://via.placeholder.com/300/DA70D6/000000?text=Frieda", scores: [25,85,40,85,88] }
+                    { name: "ميكاسا أكرمان", mbti: "ISTJ", desc: "المقاتلة الوفية", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=ميكاسا", scores: [20,80,30,98,85] },
+                    { name: "هيستوريا ريس", mbti: "ENFJ", desc: "الملكة الرحيمة", img: "https://via.placeholder.com/300/FF69B4/000000?text=هيستوريا", scores: [60,50,75,90,40] },
+                    { name: "آني ليونهارت", mbti: "ISTP", desc: "المنعزلة القوية", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=آني", scores: [15,30,55,92,85] },
+                    { name: "ساشا براوس", mbti: "ESFP", desc: "الشرهة المرحة", img: "https://via.placeholder.com/300/32CD32/000000?text=ساشا", scores: [88,10,95,65,25] },
+                    { name: "هانجي زوي", mbti: "ENTP", desc: "العالمة المجنونة", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=هانجي", scores: [75,90,80,40,35] },
+                    { name: "بيك فينغر", mbti: "INTJ", desc: "الهادئة الاستراتيجية", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=بيك", scores: [15,88,20,70,92] },
+                    { name: "غابي براون", mbti: "ESTJ", desc: "المندفعة العنيدة", img: "https://via.placeholder.com/300/B22222/FFFFFF?text=غابي", scores: [85,15,92,60,20] },
+                    { name: "فريدا ريس", mbti: "INFJ", desc: "الغامضة النبيلة", img: "https://via.placeholder.com/300/DA70D6/000000?text=فريدا", scores: [25,85,40,85,88] }
                 ]
             },
-            "قاتل الشياطين": {
+            "قاتل الشياطين - Demon Slayer": {
                 male: [
-                    { name: "كامادو تانجيرو", mbti: "ENFJ", desc: "الطيب القوي", img: "https://via.placeholder.com/300/228B22/FFFFFF?text=Tanjiro", scores: [80,30,85,95,40] },
-                    { name: "أغاتسوما زينيتسو", mbti: "ESFP", desc: "الجبان الشجاع", img: "https://via.placeholder.com/300/FFD700/000000?text=Zenitsu", scores: [90,5,95,60,15] },
-                    { name: "هاشيبيرا إينوسكي", mbti: "ESTP", desc: "المتوحش الجريء", img: "https://via.placeholder.com/300/0000CD/FFFFFF?text=Inosuke", scores: [98,2,96,80,25] },
-                    { name: "توميوكا غيو", mbti: "ISTJ", desc: "الصامت الحاد", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=Giyu", scores: [15,75,20,88,90] },
-                    { name: "رينغوكو كيوجورو", mbti: "ENFJ", desc: "المتحمس النبيل", img: "https://via.placeholder.com/300/FF4500/000000?text=Rengoku", scores: [85,25,90,95,30] },
-                    { name: "شينازوغاوا سانيمي", mbti: "ENTJ", desc: "الشرس الطموح", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Sanemi", scores: [70,55,92,85,10] },
-                    { name: "توكيتو مويتشيرو", mbti: "INTP", desc: "الضائع العبقري", img: "https://via.placeholder.com/300/00CED1/000000?text=Muichiro", scores: [5,95,10,50,88] },
-                    { name: "أوروكوداكي ساكونجي", mbti: "INFJ", desc: "المعلم الحكيم", img: "https://via.placeholder.com/300/708090/FFFFFF?text=Urokodaki", scores: [20,90,30,75,92] }
+                    { name: "كامادو تانجيرو", mbti: "ENFJ", desc: "الطيب القوي", img: "https://via.placeholder.com/300/228B22/FFFFFF?text=تانجيرو", scores: [80,30,85,95,40] },
+                    { name: "أغاتسوما زينيتسو", mbti: "ESFP", desc: "الجبان الشجاع", img: "https://via.placeholder.com/300/FFD700/000000?text=زينيتسو", scores: [90,5,95,60,15] },
+                    { name: "هاشيبيرا إينوسكي", mbti: "ESTP", desc: "المتوحش الجريء", img: "https://via.placeholder.com/300/0000CD/FFFFFF?text=إينوسكي", scores: [98,2,96,80,25] },
+                    { name: "توميوكا غيو", mbti: "ISTJ", desc: "الصامت الحاد", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=غيو", scores: [15,75,20,88,90] },
+                    { name: "رينغوكو كيوجورو", mbti: "ENFJ", desc: "المتحمس النبيل", img: "https://via.placeholder.com/300/FF4500/000000?text=كيوجورو", scores: [85,25,90,95,30] },
+                    { name: "شينازوغاوا سانيمي", mbti: "ENTJ", desc: "الشرس الطموح", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=سانيمي", scores: [70,55,92,85,10] },
+                    { name: "توكيتو مويتشيرو", mbti: "INTP", desc: "الضائع العبقري", img: "https://via.placeholder.com/300/00CED1/000000?text=مويتشيرو", scores: [5,95,10,50,88] },
+                    { name: "أوروكوداكي ساكونجي", mbti: "INFJ", desc: "المعلم الحكيم", img: "https://via.placeholder.com/300/708090/FFFFFF?text=أوروكوداكي", scores: [20,90,30,75,92] }
                 ],
                 female: [
-                    { name: "كامادو نيزوكو", mbti: "ISFP", desc: "البريئة القوية", img: "https://via.placeholder.com/300/FF69B4/000000?text=Nezuko", scores: [30,40,45,98,70] },
-                    { name: "كوتشو شينوبو", mbti: "INTJ", desc: "الذكية اللطيفة", img: "https://via.placeholder.com/300/9370DB/FFFFFF?text=Shinobu", scores: [15,92,25,65,88] },
-                    { name: "كانروجي ميتسوري", mbti: "ENFP", desc: "العاطفية المرحة", img: "https://via.placeholder.com/300/FFB6C1/000000?text=Mitsuri", scores: [80,30,85,90,35] },
-                    { name: "شينازوغاوا كاناي", mbti: "INFJ", desc: "اللطيفة الحكيمة", img: "https://via.placeholder.com/300/DA70D6/000000?text=Kanae", scores: [25,85,35,92,85] },
-                    { name: "تسويوري كيوكو", mbti: "ISTJ", desc: "الجادة المنظمة", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=Kiyoko", scores: [15,80,20,75,90] },
-                    { name: "سوسامارو", mbti: "ESFP", desc: "الشرسة الوفية", img: "https://via.placeholder.com/300/DC143C/FFFFFF?text=Susamaru", scores: [88,10,90,65,20] },
-                    { name: "تاماي", mbti: "INTP", desc: "العالمة المنعزلة", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Tamayo", scores: [10,95,15,40,92] },
-                    { name: "أوي", mbti: "ISFJ", desc: "المساعدة الهادئة", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=Aoi", scores: [20,70,30,88,80] }
+                    { name: "كامادو نيزوكو", mbti: "ISFP", desc: "البريئة القوية", img: "https://via.placeholder.com/300/FF69B4/000000?text=نيزوكو", scores: [30,40,45,98,70] },
+                    { name: "كوتشو شينوبو", mbti: "INTJ", desc: "الذكية اللطيفة", img: "https://via.placeholder.com/300/9370DB/FFFFFF?text=شينوبو", scores: [15,92,25,65,88] },
+                    { name: "كانروجي ميتسوري", mbti: "ENFP", desc: "العاطفية المرحة", img: "https://via.placeholder.com/300/FFB6C1/000000?text=ميتسوري", scores: [80,30,85,90,35] },
+                    { name: "شينازوغاوا كاناي", mbti: "INFJ", desc: "اللطيفة الحكيمة", img: "https://via.placeholder.com/300/DA70D6/000000?text=كاناي", scores: [25,85,35,92,85] },
+                    { name: "تسويوري كيوكو", mbti: "ISTJ", desc: "الجادة المنظمة", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=كيوكو", scores: [15,80,20,75,90] },
+                    { name: "سوسامارو", mbti: "ESFP", desc: "الشرسة الوفية", img: "https://via.placeholder.com/300/DC143C/FFFFFF?text=سوسامارو", scores: [88,10,90,65,20] },
+                    { name: "تاماي", mbti: "INTP", desc: "العالمة المنعزلة", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=تاماي", scores: [10,95,15,40,92] },
+                    { name: "أوي", mbti: "ISFJ", desc: "المساعدة الهادئة", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=أوي", scores: [20,70,30,88,80] }
                 ]
             },
-            "ديث نوت": {
+            "ديث نوت - Death Note": {
                 male: [
-                    { name: "ياغامي لايت", mbti: "INTJ", desc: "العبقري المتلاعب", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Light", scores: [10,99,20,95,98] },
+                    { name: "ياغامي لايت", mbti: "INTJ", desc: "العبقري المتلاعب", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=لايت", scores: [10,99,20,95,98] },
                     { name: "إل لوليت", mbti: "INTP", desc: "المحقق الغريب", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=L", scores: [5,98,10,55,90] },
-                    { name: "ريوك", mbti: "ESTP", desc: "الشينجامي المرح", img: "https://via.placeholder.com/300/000000/FFFFFF?text=Ryuk", scores: [95,15,90,60,70] },
-                    { name: "ماتسودا توتا", mbti: "ESFP", desc: "المتحمس الساذج", img: "https://via.placeholder.com/300/FF8C00/000000?text=Matsuda", scores: [85,20,88,70,30] },
-                    { name: "ميلو", mbti: "ENTJ", desc: "الطموح العنيف", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Mello", scores: [70,80,85,90,20] },
-                    { name: "نير", mbti: "INTJ", desc: "الهادئ الذكي", img: "https://via.placeholder.com/300/708090/FFFFFF?text=Near", scores: [15,90,20,70,92] },
-                    { name: "أويزومي", mbti: "ESTJ", desc: "الصارم الرسمي", img: "https://via.placeholder.com/300/191970/FFFFFF?text=Aizawa", scores: [40,75,50,65,45] },
-                    { name: "ميكامي تيرو", mbti: "INFJ", desc: "المتعصب المثالي", img: "https://via.placeholder.com/300/DC143C/FFFFFF?text=Mikami", scores: [30,85,45,80,80] }
+                    { name: "ريوك", mbti: "ESTP", desc: "الشينيجامي المرح", img: "https://via.placeholder.com/300/000000/FFFFFF?text=ريوك", scores: [95,15,90,60,70] },
+                    { name: "ماتسودا توتا", mbti: "ESFP", desc: "المتحمس الساذج", img: "https://via.placeholder.com/300/FF8C00/000000?text=ماتسودا", scores: [85,20,88,70,30] },
+                    { name: "ميلو", mbti: "ENTJ", desc: "الطموح العنيف", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=ميلو", scores: [70,80,85,90,20] },
+                    { name: "نير", mbti: "INTJ", desc: "الهادئ الذكي", img: "https://via.placeholder.com/300/708090/FFFFFF?text=نير", scores: [15,90,20,70,92] },
+                    { name: "أويزومي", mbti: "ESTJ", desc: "الصارم الرسمي", img: "https://via.placeholder.com/300/191970/FFFFFF?text=أويزومي", scores: [40,75,50,65,45] },
+                    { name: "ميكامي تيرو", mbti: "INFJ", desc: "المتعصب المثالي", img: "https://via.placeholder.com/300/DC143C/FFFFFF?text=ميكامي", scores: [30,85,45,80,80] }
                 ],
                 female: [
-                    { name: "أماني ميسا", mbti: "ESFP", desc: "العاشقة المخلصة", img: "https://via.placeholder.com/300/FF69B4/000000?text=Misa", scores: [90,5,95,80,20] },
-                    { name: "ريم", mbti: "ISFJ", desc: "الحامية الوفية", img: "https://via.placeholder.com/300/DA70D6/000000?text=Rem", scores: [20,70,35,95,75] },
-                    { name: "كيومي تاكادا", mbti: "ENTJ", desc: "الطموحة الذكية", img: "https://via.placeholder.com/300/B8860B/000000?text=Takada", scores: [65,88,70,85,40] },
-                    { name: "سايامي", mbti: "ISTJ", desc: "الهادئة الجادة", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=Sayu", scores: [20,75,25,65,88] }
+                    { name: "أماني ميسا", mbti: "ESFP", desc: "العاشقة المخلصة", img: "https://via.placeholder.com/300/FF69B4/000000?text=ميسا", scores: [90,5,95,80,20] },
+                    { name: "ريم", mbti: "ISFJ", desc: "الحامية الوفية", img: "https://via.placeholder.com/300/DA70D6/000000?text=ريم", scores: [20,70,35,95,75] },
+                    { name: "كيومي تاكادا", mbti: "ENTJ", desc: "الطموحة الذكية", img: "https://via.placeholder.com/300/B8860B/000000?text=تاكادا", scores: [65,88,70,85,40] },
+                    { name: "سايامي", mbti: "ISTJ", desc: "الهادئة الجادة", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=سايامي", scores: [20,75,25,65,88] }
                 ]
             },
-            "هنتر × هنتر": {
+            "هنتر × هنتر - Hunter x Hunter": {
                 male: [
-                    { name: "غون فريكس", mbti: "ESFP", desc: "الفضولي النقي", img: "https://via.placeholder.com/300/32CD32/000000?text=Gon", scores: [92,10,95,80,30] },
-                    { name: "كيلوا زولديك", mbti: "ENTP", desc: "المرح العبقري", img: "https://via.placeholder.com/300/9370DB/FFFFFF?text=Killua", scores: [85,90,90,65,25] },
-                    { name: "كورابيكا", mbti: "INTJ", desc: "المنتقم الحازم", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Kurapika", scores: [15,95,25,88,92] },
-                    { name: "ليوريو", mbti: "ESTJ", desc: "الطيب العملي", img: "https://via.placeholder.com/300/FFD700/000000?text=Leorio", scores: [70,45,80,80,35] },
-                    { name: "هيسوكا", mbti: "ESTP", desc: "المقاتل الماكر", img: "https://via.placeholder.com/300/FF4500/000000?text=Hisoka", scores: [90,60,92,70,15] },
-                    { name: "كرولو لوسيلفر", mbti: "INTJ", desc: "الزعيم الهادئ", img: "https://via.placeholder.com/300/191970/FFFFFF?text=Chrollo", scores: [10,95,15,85,95] },
-                    { name: "إيلومي زولديك", mbti: "ISTJ", desc: "البارد المنظم", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=Illumi", scores: [5,75,10,90,90] },
-                    { name: "نيتيرو", mbti: "ENTJ", desc: "الحكيم القوي", img: "https://via.placeholder.com/300/B8860B/000000?text=Netero", scores: [50,80,70,95,60] }
+                    { name: "غون فريكس", mbti: "ESFP", desc: "الفضولي النقي", img: "https://via.placeholder.com/300/32CD32/000000?text=غون", scores: [92,10,95,80,30] },
+                    { name: "كيلوا زولديك", mbti: "ENTP", desc: "المرح العبقري", img: "https://via.placeholder.com/300/9370DB/FFFFFF?text=كيلوا", scores: [85,90,90,65,25] },
+                    { name: "كورابيكا", mbti: "INTJ", desc: "المنتقم الحازم", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=كورابيكا", scores: [15,95,25,88,92] },
+                    { name: "ليوريو", mbti: "ESTJ", desc: "الطيب العملي", img: "https://via.placeholder.com/300/FFD700/000000?text=ليوريو", scores: [70,45,80,80,35] },
+                    { name: "هيسوكا", mbti: "ESTP", desc: "المقاتل الماكر", img: "https://via.placeholder.com/300/FF4500/000000?text=هيسوكا", scores: [90,60,92,70,15] },
+                    { name: "كرولو لوسيلفر", mbti: "INTJ", desc: "الزعيم الهادئ", img: "https://via.placeholder.com/300/191970/FFFFFF?text=كرولو", scores: [10,95,15,85,95] },
+                    { name: "إيلومي زولديك", mbti: "ISTJ", desc: "البارد المنظم", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=إيلومي", scores: [5,75,10,90,90] },
+                    { name: "نيتيرو", mbti: "ENTJ", desc: "الحكيم القوي", img: "https://via.placeholder.com/300/B8860B/000000?text=نيتيرو", scores: [50,80,70,95,60] }
                 ],
                 female: [
-                    { name: "بيسكي", mbti: "ESFJ", desc: "المدربة الحنونة", img: "https://via.placeholder.com/300/FFB6C1/000000?text=Biscuit", scores: [75,40,85,90,30] },
-                    { name: "ماشي", mbti: "ISTP", desc: "الهادئة الحادة", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Machi", scores: [15,30,55,92,88] },
-                    { name: "باكينودا", mbti: "ESTP", desc: "المندفعة القوية", img: "https://via.placeholder.com/300/FF0000/FFFFFF?text=Pakunoda", scores: [80,25,88,75,40] },
-                    { name: "شيزوكو", mbti: "ISFJ", desc: "الناسية اللطيفة", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=Shizuku", scores: [30,70,35,88,78] }
+                    { name: "بيسكي", mbti: "ESFJ", desc: "المدربة الحنونة", img: "https://via.placeholder.com/300/FFB6C1/000000?text=بيسكي", scores: [75,40,85,90,30] },
+                    { name: "ماشي", mbti: "ISTP", desc: "الهادئة الحادة", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=ماشي", scores: [15,30,55,92,88] },
+                    { name: "باكينودا", mbti: "ESTP", desc: "المندفعة القوية", img: "https://via.placeholder.com/300/FF0000/FFFFFF?text=باكينودا", scores: [80,25,88,75,40] },
+                    { name: "شيزوكو", mbti: "ISFJ", desc: "الناسية اللطيفة", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=شيزوكو", scores: [30,70,35,88,78] }
                 ]
             },
-            "فيري تيل": {
+            "فيري تيل - Fairy Tail": {
                 male: [
-                    { name: "ناتسو دراغنيل", mbti: "ESFP", desc: "الناري الشجاع", img: "https://via.placeholder.com/300/FF4500/000000?text=Natsu", scores: [95,5,98,85,20] },
-                    { name: "غراي فولباستر", mbti: "ISTP", desc: "البارد المخلص", img: "https://via.placeholder.com/300/00BFFF/000000?text=Gray", scores: [35,25,65,95,80] },
-                    { name: "إيرزا سكارليت", mbti: "ESTJ", desc: "القائدة الصارمة", img: "https://via.placeholder.com/300/FF1493/FFFFFF?text=Erza", scores: [45,80,85,90,30] },
-                    { name: "لوكي", mbti: "ENTP", desc: "اللاعب الذكي", img: "https://via.placeholder.com/300/FFD700/000000?text=Loke", scores: [80,75,88,60,25] },
-                    { name: "ماكاروف", mbti: "ENFJ", desc: "الأب الحكيم", img: "https://via.placeholder.com/300/708090/FFFFFF?text=Makarov", scores: [60,85,75,95,60] },
-                    { name: "غيلدارتس", mbti: "ENTJ", desc: "المغامر القوي", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Gildarts", scores: [80,40,90,88,15] },
-                    { name: "جلال", mbti: "INFJ", desc: "الغامض النبيل", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=Jellal", scores: [25,85,35,80,88] },
-                    { name: "لاكسوس", mbti: "ESTJ", desc: "المتكبر القوي", img: "https://via.placeholder.com/300/FFD700/000000?text=Laxus", scores: [70,45,88,92,15] }
+                    { name: "ناتسو دراغنيل", mbti: "ESFP", desc: "الناري الشجاع", img: "https://via.placeholder.com/300/FF4500/000000?text=ناتسو", scores: [95,5,98,85,20] },
+                    { name: "غراي فولباستر", mbti: "ISTP", desc: "البارد المخلص", img: "https://via.placeholder.com/300/00BFFF/000000?text=غراي", scores: [35,25,65,95,80] },
+                    { name: "إيرزا سكارليت", mbti: "ESTJ", desc: "القائدة الصارمة", img: "https://via.placeholder.com/300/FF1493/FFFFFF?text=إيرزا", scores: [45,80,85,90,30] },
+                    { name: "لوكي", mbti: "ENTP", desc: "اللاعب الذكي", img: "https://via.placeholder.com/300/FFD700/000000?text=لوكي", scores: [80,75,88,60,25] },
+                    { name: "ماكاروف", mbti: "ENFJ", desc: "الأب الحكيم", img: "https://via.placeholder.com/300/708090/FFFFFF?text=ماكاروف", scores: [60,85,75,95,60] },
+                    { name: "غيلدارتس", mbti: "ENTJ", desc: "المغامر القوي", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=غيلدارتس", scores: [80,40,90,88,15] },
+                    { name: "جلال", mbti: "INFJ", desc: "الغامض النبيل", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=جلال", scores: [25,85,35,80,88] },
+                    { name: "لاكسوس", mbti: "ESTJ", desc: "المتكبر القوي", img: "https://via.placeholder.com/300/FFD700/000000?text=لاكسوس", scores: [70,45,88,92,15] }
                 ],
                 female: [
-                    { name: "لوسي هارتفيليا", mbti: "ENFJ", desc: "الكاتبة الحالمة", img: "https://via.placeholder.com/300/FFD700/000000?text=Lucy", scores: [75,55,80,95,40] },
-                    { name: "جوفيا", mbti: "ISFJ", desc: "العاشقة الوفية", img: "https://via.placeholder.com/300/1E90FF/FFFFFF?text=Juvia", scores: [30,80,40,98,70] },
-                    { name: "ويندي", mbti: "INFP", desc: "اللطيفة الخجولة", img: "https://via.placeholder.com/300/98FB98/000000?text=Wendy", scores: [20,85,30,90,80] },
-                    { name: "ميراجين", mbti: "ESFJ", desc: "المرحة الحنونة", img: "https://via.placeholder.com/300/FF69B4/000000?text=Mirajane", scores: [85,30,88,85,25] }
+                    { name: "لوسي هارتفيليا", mbti: "ENFJ", desc: "الكاتبة الحالمة", img: "https://via.placeholder.com/300/FFD700/000000?text=لوسي", scores: [75,55,80,95,40] },
+                    { name: "جوفيا", mbti: "ISFJ", desc: "العاشقة الوفية", img: "https://via.placeholder.com/300/1E90FF/FFFFFF?text=جوفيا", scores: [30,80,40,98,70] },
+                    { name: "ويندي", mbti: "INFP", desc: "اللطيفة الخجولة", img: "https://via.placeholder.com/300/98FB98/000000?text=ويندي", scores: [20,85,30,90,80] },
+                    { name: "ميراجين", mbti: "ESFJ", desc: "المرحة الحنونة", img: "https://via.placeholder.com/300/FF69B4/000000?text=ميراجين", scores: [85,30,88,85,25] }
                 ]
             },
-            "سباي × فاميلي": {
+            "سباي × فاميلي - Spy x Family": {
                 male: [
-                    { name: "لويد فورجر", mbti: "ISTJ", desc: "الجاسوس الكفؤ", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=Loid", scores: [20,90,30,95,88] },
-                    { name: "يوري بريار", mbti: "ESFJ", desc: "الحامي الغيور", img: "https://via.placeholder.com/300/228B22/FFFFFF?text=Yuri", scores: [70,50,80,92,25] },
-                    { name: "فرانكي فرانكلين", mbti: "ENTP", desc: "المخبر العبقري", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=Franky", scores: [75,88,85,60,30] },
-                    { name: "دونوفان ديزموند", mbti: "INTJ", desc: "الزعيم الغامض", img: "https://via.placeholder.com/300/191970/FFFFFF?text=Donovan", scores: [10,95,15,80,92] }
+                    { name: "لويد فورجر", mbti: "ISTJ", desc: "الجاسوس الكفؤ", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=لويد", scores: [20,90,30,95,88] },
+                    { name: "يوري بريار", mbti: "ESFJ", desc: "الحامي الغيور", img: "https://via.placeholder.com/300/228B22/FFFFFF?text=يوري", scores: [70,50,80,92,25] },
+                    { name: "فرانكي فرانكلين", mbti: "ENTP", desc: "المخبر العبقري", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=فرانكي", scores: [75,88,85,60,30] },
+                    { name: "دونوفان ديزموند", mbti: "INTJ", desc: "الزعيم الغامض", img: "https://via.placeholder.com/300/191970/FFFFFF?text=ديزموند", scores: [10,95,15,80,92] }
                 ],
                 female: [
-                    { name: "يور فورجر", mbti: "INFJ", desc: "القاتلة الحنونة", img: "https://via.placeholder.com/300/FF1493/000000?text=Yor", scores: [30,85,40,95,85] },
-                    { name: "آنيا فورجر", mbti: "ENFP", desc: "الطفلة المرحة", img: "https://via.placeholder.com/300/FF69B4/000000?text=Anya", scores: [85,15,95,80,15] },
-                    { name: "سيلفيا شيروود", mbti: "ENTJ", desc: "الرئيسة الحازمة", img: "https://via.placeholder.com/300/B8860B/000000?text=Sylvia", scores: [45,90,75,85,50] },
-                    { name: "بيكي بلاكبيل", mbti: "ESFP", desc: "المدللة الاجتماعية", img: "https://via.placeholder.com/300/FFB6C1/000000?text=Becky", scores: [90,10,92,65,20] }
+                    { name: "يور فورجر", mbti: "INFJ", desc: "القاتلة الحنونة", img: "https://via.placeholder.com/300/FF1493/000000?text=يور", scores: [30,85,40,95,85] },
+                    { name: "آنيا فورجر", mbti: "ENFP", desc: "الطفلة المرحة", img: "https://via.placeholder.com/300/FF69B4/000000?text=آنيا", scores: [85,15,95,80,15] },
+                    { name: "سيلفيا شيروود", mbti: "ENTJ", desc: "الرئيسة الحازمة", img: "https://via.placeholder.com/300/B8860B/000000?text=سيلفيا", scores: [45,90,75,85,50] },
+                    { name: "بيكي بلاكبيل", mbti: "ESFP", desc: "المدللة الاجتماعية", img: "https://via.placeholder.com/300/FFB6C1/000000?text=بيكي", scores: [90,10,92,65,20] }
                 ]
             }
         };
 
-        // أسئلة نمط MBTI (20 سؤال)
+        // أسئلة بنمط MBTI (20 سؤال)
         const questions = [
             { text: "بعد يوم طويل ومرهق، أفضل طريقة لاستعادة طاقتي هي:", options: [
                 { text: "الخروج مع الأصدقاء والاستمتاع", scores: [2,0,2,1,-1] },
@@ -453,7 +485,7 @@
             ]}
         ];
 
-        // تحويل MBTI
+        // تحويل الدرجات إلى MBTI
         function calculateMBTI(scores) {
             const O = scores[0], C = scores[1], E = scores[2], A = scores[3], N = scores[4];
             let mbti = "";
@@ -464,14 +496,13 @@
             return mbti;
         }
 
-        // المسافة الإقليدية
         function distance(a, b) {
             return Math.sqrt(a.reduce((sum, val, i) => sum + Math.pow(val - b[i], 2), 0));
         }
 
         // حالة التطبيق
         const state = {
-            step: 'anime', // 'anime', 'gender', 'quiz', 'result'
+            step: 'anime',
             selectedAnime: null,
             selectedGender: null,
             currentQuestion: 0,
@@ -480,6 +511,11 @@
         };
 
         const app = document.getElementById('app');
+        const body = document.body;
+
+        function setBodyClass(cls) {
+            body.className = cls;
+        }
 
         function render() {
             app.innerHTML = '';
@@ -490,18 +526,19 @@
         }
 
         function renderAnimeSelection() {
+            setBodyClass('welcome-bg');
             const screen = document.createElement('div');
             screen.className = 'screen active';
             screen.innerHTML = `<h1>AnimeNexus</h1>
                 <h2>اختر عالم الأنمي</h2>
                 <div class="options-grid" id="anime-grid"></div>`;
             const grid = screen.querySelector('#anime-grid');
-            for (let anime in animeData) {
+            for (let animeKey in animeData) {
                 const btn = document.createElement('button');
                 btn.className = 'btn';
-                btn.textContent = anime;
+                btn.textContent = animeKey;
                 btn.onclick = () => {
-                    state.selectedAnime = anime;
+                    state.selectedAnime = animeKey;
                     state.step = 'gender';
                     render();
                 };
@@ -511,6 +548,7 @@
         }
 
         function renderGenderSelection() {
+            setBodyClass('welcome-bg');
             const screen = document.createElement('div');
             screen.className = 'screen active';
             screen.innerHTML = `<h2>اختر جنسك</h2>
@@ -539,12 +577,14 @@
         }
 
         function renderQuiz() {
+            setBodyClass('quiz-bg');
             const q = questions[state.currentQuestion];
             const screen = document.createElement('div');
             screen.className = 'screen active';
             const progress = ((state.currentQuestion / questions.length) * 100).toFixed(0);
             screen.innerHTML = `
                 <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+                <div class="question-counter">السؤال ${state.currentQuestion + 1} من ${questions.length}</div>
                 <div class="quiz-question">
                     <div class="question-text">${state.currentQuestion + 1}. ${q.text}</div>
                     <div class="options-grid">
@@ -574,6 +614,7 @@
         }
 
         function renderResult() {
+            setBodyClass('result-bg');
             const characters = animeData[state.selectedAnime][state.selectedGender];
             let bestMatch = null, bestDist = Infinity;
             characters.forEach(char => {
@@ -581,6 +622,9 @@
                 if (dist < bestDist) { bestDist = dist; bestMatch = char; }
             });
             const mbti = calculateMBTI(state.scores);
+            const shareText = `🎭 نمط شخصيتي: ${mbti}\nمن عالم ${state.selectedAnime} أشبه: ${bestMatch.name}\nاكتشف شخصيتك هنا: ${window.location.href}`;
+            const encodedShare = encodeURIComponent(shareText);
+
             const screen = document.createElement('div');
             screen.className = 'screen active';
             screen.innerHTML = `
@@ -591,9 +635,23 @@
                     <img src="${bestMatch.img}" alt="${bestMatch.name}" crossorigin="anonymous">
                     <div class="character-name">${bestMatch.name}</div>
                     <p>من عالم <strong>${state.selectedAnime}</strong></p>
-                    <button class="btn" id="restart-btn">🔁 إعادة الاختبار</button>
+                    <div class="explain-text">
+                        ✨ بناءً على إجاباتك، نمط شخصيتك هو <strong>${mbti}</strong>، وهذا النمط يتشابه مع شخصية <strong>${bestMatch.name}</strong> التي تتميز بـ (${bestMatch.desc}). تحليلنا الذكي قارن سماتك الخمسة بأبطال هذا العالم واختار الأقرب إليك.
+                    </div>
+                    <div class="share-buttons">
+                        <button class="share-btn" id="copy-btn">📋 نسخ النتيجة</button>
+                        <a class="share-btn" href="https://wa.me/?text=${encodedShare}" target="_blank">💬 واتساب</a>
+                        <a class="share-btn" href="https://twitter.com/intent/tweet?text=${encodedShare}" target="_blank">🐦 تويتر</a>
+                    </div>
                 </div>
+                <button class="btn" id="restart-btn" style="margin-top:25px;">🔁 إعادة الاختبار</button>
             `;
+
+            screen.querySelector('#copy-btn').onclick = () => {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('تم نسخ النتيجة إلى الحافظة!');
+                });
+            };
             screen.querySelector('#restart-btn').onclick = () => {
                 state.step = 'anime';
                 state.selectedAnime = null;
