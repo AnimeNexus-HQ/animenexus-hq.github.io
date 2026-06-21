@@ -2,39 +2,610 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnimeNexus - اكتشف شخصيتك الأنميوية</title>
     <style>
-        body { background: #020617; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        
-        /* 1. تأثير الدخول (بدون صور) */
-        #splash {
-            position: fixed; inset: 0; background: #000; z-index: 999;
-            display: flex; justify-content: center; align-items: center;
-            animation: hideSplash 3s ease-out forwards;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0ff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: radial-gradient(circle at 30% 20%, #1a1040 0%, #0a0a0f 70%);
         }
-        @keyframes hideSplash { 70% { opacity: 1; } 100% { opacity: 0; pointer-events: none; } }
-        .logo-text { color: #8b5cf6; font-size: 3rem; font-weight: bold; text-shadow: 0 0 15px #8b5cf6; }
-
-        /* 2. البطاقة المحدثة */
-        .id-card {
-            width: 450px; background: #e2e8f0; color: #000;
-            border-radius: 10px; padding: 20px; border: 3px solid #64748b;
-            margin-top: 50px; box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        .container {
+            width: 100%;
+            max-width: 750px;
+            background: rgba(20, 20, 40, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(100, 50, 255, 0.3);
+            border: 1px solid rgba(150, 100, 255, 0.25);
+            transition: all 0.3s ease;
         }
-        .header { border-bottom: 2px solid #000; padding-bottom: 5px; font-weight: bold; }
+        h1, h2 {
+            text-align: center;
+            background: linear-gradient(135deg, #c084fc, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 1.8rem; margin-top: 10px; }
+        .screen {
+            display: none;
+            animation: fadeSlide 0.5s ease forwards;
+        }
+        .screen.active { display: block; }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin: 12px 0;
+            background: rgba(30, 30, 50, 0.8);
+            border: 2px solid #8b5cf6;
+            color: #e0e0ff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .btn:hover {
+            background: #8b5cf6;
+            color: #fff;
+            box-shadow: 0 0 25px #8b5cf6aa;
+            transform: scale(1.02);
+        }
+        .btn.selected {
+            background: #7c3aed;
+            border-color: #c084fc;
+            box-shadow: 0 0 30px #a78bfa;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .quiz-question {
+            margin: 35px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 18px;
+            border-right: 5px solid #8b5cf6;
+        }
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #2a2a40;
+            border-radius: 20px;
+            margin: 25px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #8b5cf6, #c084fc);
+            border-radius: 20px;
+            transition: width 0.4s ease;
+        }
+        .result-card {
+            text-align: center;
+            background: rgba(0,0,0,0.3);
+            border-radius: 24px;
+            padding: 35px 20px;
+            margin-top: 20px;
+            border: 1px solid #4c1d95;
+        }
+        .result-card img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #8b5cf6;
+            box-shadow: 0 0 35px #8b5cf6aa;
+            margin: 20px auto;
+            display: block;
+        }
+        .mbti-badge {
+            display: inline-block;
+            background: #8b5cf6;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 40px;
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin: 15px 0;
+        }
+        .character-name {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #f0e68c, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            margin: 15px 0;
+        }
+        .small-note {
+            color: #aaa;
+            font-size: 0.85rem;
+            margin: 8px 0;
+        }
+        .flex-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 500px) {
+            .container { padding: 20px 15px; }
+            h1 { font-size: 2rem; }
+            .btn { font-size: 1rem; padding: 12px; }
+        }
     </style>
 </head>
 <body>
-
-    <!-- مشهد الدخول -->
-    <div id="splash"><div class="logo-text">SOLO LEVELING</div></div>
-
-    <!-- البطاقة المحدثة ببياناتك -->
-    <div class="id-card">
-        <div class="header">هوية الصياد - Hunter License</div>
-        <p>الرقم: 9988776655</p>
-        <p>الاسم: [اكتب اسمك هنا]</p>
-        <p>الرتبة: S</p>
+    <div class="container" id="app">
+        <!-- الشاشات سيتم توليدها ديناميكياً -->
     </div>
 
+    <script>
+        // ======================= بيانات الأنميات والشخصيات =======================
+        const animeData = {
+            "ون بيس": {
+                male: [
+                    { name: "مونكي دي لوفي", mbti: "ESFP", desc: "المغامر الشجاع", img: "https://via.placeholder.com/300/FFD700/000000?text=Luffy", scores: [90,5,95,70,40] },
+                    { name: "رورونوا زورو", mbti: "ISTP", desc: "المقاتل الصامد", img: "https://via.placeholder.com/300/228B22/FFFFFF?text=Zoro", scores: [40,20,70,95,80] },
+                    { name: "فينسموك سانجي", mbti: "ESFJ", desc: "الطباخ الشهم", img: "https://via.placeholder.com/300/1E90FF/FFFFFF?text=Sanji", scores: [70,50,85,40,30] },
+                    { name: "ترافلجار لاو", mbti: "INTJ", desc: "الاستراتيجي البارد", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Law", scores: [10,95,25,80,90] },
+                    { name: "بورتغاس دي إيس", mbti: "ENFJ", desc: "الأخ النبيل", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=Ace", scores: [80,30,75,85,20] },
+                    { name: "سيلفرز رايلي", mbti: "INFJ", desc: "الحكيم الهادئ", img: "https://via.placeholder.com/300/708090/FFFFFF?text=Rayleigh", scores: [20,88,40,60,95] },
+                    { name: "كروكودايل", mbti: "ENTJ", desc: "القائد الطموح", img: "https://via.placeholder.com/300/B8860B/000000?text=Crocodile", scores: [50,85,70,95,15] },
+                    { name: "باجي المهرج", mbti: "ESTP", desc: "المخادع الجريء", img: "https://via.placeholder.com/300/FF0000/FFFFFF?text=Buggy", scores: [95,10,90,45,60] }
+                ],
+                female: [
+                    { name: "نامي", mbti: "ESTJ", desc: "الملاحة العملية", img: "https://via.placeholder.com/300/FFA500/000000?text=Nami", scores: [45,85,70,40,25] },
+                    { name: "نيكو روبين", mbti: "INTJ", desc: "العالمة الغامضة", img: "https://via.placeholder.com/300/800080/FFFFFF?text=Robin", scores: [15,98,30,70,92] },
+                    { name: "بوا هانكوك", mbti: "ENTJ", desc: "الإمبراطورة الواثقة", img: "https://via.placeholder.com/300/FF69B4/000000?text=Hancock", scores: [80,60,95,90,40] },
+                    { name: "نيفرتاري فيفي", mbti: "ENFJ", desc: "الأميرة المخلصة", img: "https://via.placeholder.com/300/00BFFF/000000?text=Vivi", scores: [70,45,75,95,55] },
+                    { name: "كارو", mbti: "ISFJ", desc: "الحامية الوفية", img: "https://via.placeholder.com/300/FFB6C1/000000?text=Carrot", scores: [30,70,50,90,70] },
+                    { name: "شيرلي", mbti: "ISTJ", desc: "الهادئة العملية", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=Shirley", scores: [20,80,25,60,88] },
+                    { name: "أوتاما", mbti: "ESFP", desc: "المتفائلة النشطة", img: "https://via.placeholder.com/300/FFD700/000000?text=Otama", scores: [85,15,92,65,30] },
+                    { name: "جول دي روجر", mbti: "INFJ", desc: "الحالمة الملهمة", img: "https://via.placeholder.com/300/DA70D6/000000?text=Rouge", scores: [25,90,35,80,85] }
+                ]
+            },
+            "ناروتو": {
+                male: [
+                    { name: "أوزوماكي ناروتو", mbti: "ESFP", desc: "النابض بالحياة", img: "https://via.placeholder.com/300/FF8C00/000000?text=Naruto", scores: [92,8,98,75,25] },
+                    { name: "أوتشيها ساسكي", mbti: "INTJ", desc: "المنتقم البارد", img: "https://via.placeholder.com/300/191970/FFFFFF?text=Sasuke", scores: [10,95,20,85,95] },
+                    { name: "هاتاكي كاكاشي", mbti: "INTP", desc: "الهادئ العبقري", img: "https://via.placeholder.com/300/778899/FFFFFF?text=Kakashi", scores: [15,92,25,65,90] },
+                    { name: "روك لي", mbti: "ESTJ", desc: "المثابر القوي", img: "https://via.placeholder.com/300/32CD32/000000?text=Lee", scores: [55,15,85,98,20] },
+                    { name: "شيكامارو نارا", mbti: "INTP", desc: "الاستراتيجي الكسول", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=Shikamaru", scores: [5,99,10,45,80] },
+                    { name: "غارا", mbti: "INFJ", desc: "المنعزل الحكيم", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Gaara", scores: [20,80,30,70,88] },
+                    { name: "جيرايا", mbti: "ENFP", desc: "الناسك المرح", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=Jiraiya", scores: [88,40,85,50,20] },
+                    { name: "مينato ناميكازي", mbti: "ENFJ", desc: "البطل المتواضع", img: "https://via.placeholder.com/300/FFD700/000000?text=Minato", scores: [75,65,80,90,60] }
+                ],
+                female: [
+                    { name: "هارونو ساكورا", mbti: "ESFJ", desc: "القوية الحنونة", img: "https://via.placeholder.com/300/FF1493/FFFFFF?text=Sakura", scores: [70,45,80,80,35] },
+                    { name: "هيناتا هيوغا", mbti: "ISFJ", desc: "الخجولة الوفية", img: "https://via.placeholder.com/300/9370DB/FFFFFF?text=Hinata", scores: [25,80,35,98,75] },
+                    { name: "تسونادي", mbti: "ESTJ", desc: "القائدة الصارمة", img: "https://via.placeholder.com/300/FFD700/000000?text=Tsunade", scores: [60,75,85,70,30] },
+                    { name: "كونان", mbti: "INTJ", desc: "الهادئة الحازمة", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Konan", scores: [15,90,25,65,92] },
+                    { name: "تيماري", mbti: "ESTP", desc: "الجريئة الحادة", img: "https://via.placeholder.com/300/DAA520/000000?text=Temari", scores: [90,20,88,60,40] },
+                    { name: "إينو ياماناكا", mbti: "ESFP", desc: "المرحة الاجتماعية", img: "https://via.placeholder.com/300/FF69B4/000000?text=Ino", scores: [85,15,92,65,20] },
+                    { name: "كوريناي", mbti: "INFJ", desc: "الحكيمة الحنونة", img: "https://via.placeholder.com/300/DC143C/FFFFFF?text=Kurenai", scores: [30,85,45,88,80] },
+                    { name: "شيزوني", mbti: "ISFJ", desc: "المخلصة الهادئة", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=Shizune", scores: [20,75,30,85,78] }
+                ]
+            },
+            "هجوم العمالقة": {
+                male: [
+                    { name: "ليفاي أكرمان", mbti: "ISTP", desc: "الجندي البارد", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=Levi", scores: [35,20,65,95,85] },
+                    { name: "إرين ييغر", mbti: "ENTJ", desc: "الثائر العازم", img: "https://via.placeholder.com/300/006400/FFFFFF?text=Eren", scores: [80,55,90,98,10] },
+                    { name: "أرمين أرليرت", mbti: "INTP", desc: "المفكر الحساس", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=Armin", scores: [10,95,15,30,80] },
+                    { name: "جان كيرشتاين", mbti: "ESTJ", desc: "الواقعي القيادي", img: "https://via.placeholder.com/300/DAA520/000000?text=Jean", scores: [65,45,80,60,30] },
+                    { name: "كوني سبرينغر", mbti: "ESFP", desc: "المرح المخلص", img: "https://via.placeholder.com/300/FF8C00/000000?text=Connie", scores: [90,10,88,70,40] },
+                    { name: "زيك ييغر", mbti: "INTJ", desc: "الاستراتيجي الغامض", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Zeke", scores: [25,92,20,88,90] },
+                    { name: "راينر براون", mbti: "ISFJ", desc: "الممزق الوفي", img: "https://via.placeholder.com/300/B8860B/000000?text=Reiner", scores: [40,70,45,80,65] },
+                    { name: "إروين سميث", mbti: "ENTJ", desc: "القائد الملهم", img: "https://via.placeholder.com/300/FFD700/000000?text=Erwin", scores: [70,85,80,95,50] }
+                ],
+                female: [
+                    { name: "ميكاسا أكرمان", mbti: "ISTJ", desc: "المقاتلة الوفية", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Mikasa", scores: [20,80,30,98,85] },
+                    { name: "هيستوريا ريس", mbti: "ENFJ", desc: "الملكة الرحيمة", img: "https://via.placeholder.com/300/FF69B4/000000?text=Historia", scores: [60,50,75,90,40] },
+                    { name: "آني ليونهارت", mbti: "ISTP", desc: "المنعزلة القوية", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Annie", scores: [15,30,55,92,85] },
+                    { name: "ساشا براوس", mbti: "ESFP", desc: "الشرهة المرحة", img: "https://via.placeholder.com/300/32CD32/000000?text=Sasha", scores: [88,10,95,65,25] },
+                    { name: "هانجي زوي", mbti: "ENTP", desc: "العالمة المجنونة", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=Hange", scores: [75,90,80,40,35] },
+                    { name: "بيك فينغر", mbti: "INTJ", desc: "الهادئة الاستراتيجية", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=Pieck", scores: [15,88,20,70,92] },
+                    { name: "غابي براون", mbti: "ESTJ", desc: "المندفعة العنيدة", img: "https://via.placeholder.com/300/B22222/FFFFFF?text=Gabi", scores: [85,15,92,60,20] },
+                    { name: "فريدا ريس", mbti: "INFJ", desc: "الغامضة النبيلة", img: "https://via.placeholder.com/300/DA70D6/000000?text=Frieda", scores: [25,85,40,85,88] }
+                ]
+            },
+            "قاتل الشياطين": {
+                male: [
+                    { name: "كامادو تانجيرو", mbti: "ENFJ", desc: "الطيب القوي", img: "https://via.placeholder.com/300/228B22/FFFFFF?text=Tanjiro", scores: [80,30,85,95,40] },
+                    { name: "أغاتسوما زينيتسو", mbti: "ESFP", desc: "الجبان الشجاع", img: "https://via.placeholder.com/300/FFD700/000000?text=Zenitsu", scores: [90,5,95,60,15] },
+                    { name: "هاشيبيرا إينوسكي", mbti: "ESTP", desc: "المتوحش الجريء", img: "https://via.placeholder.com/300/0000CD/FFFFFF?text=Inosuke", scores: [98,2,96,80,25] },
+                    { name: "توميوكا غيو", mbti: "ISTJ", desc: "الصامت الحاد", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=Giyu", scores: [15,75,20,88,90] },
+                    { name: "رينغوكو كيوجورو", mbti: "ENFJ", desc: "المتحمس النبيل", img: "https://via.placeholder.com/300/FF4500/000000?text=Rengoku", scores: [85,25,90,95,30] },
+                    { name: "شينازوغاوا سانيمي", mbti: "ENTJ", desc: "الشرس الطموح", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Sanemi", scores: [70,55,92,85,10] },
+                    { name: "توكيتو مويتشيرو", mbti: "INTP", desc: "الضائع العبقري", img: "https://via.placeholder.com/300/00CED1/000000?text=Muichiro", scores: [5,95,10,50,88] },
+                    { name: "أوروكوداكي ساكونجي", mbti: "INFJ", desc: "المعلم الحكيم", img: "https://via.placeholder.com/300/708090/FFFFFF?text=Urokodaki", scores: [20,90,30,75,92] }
+                ],
+                female: [
+                    { name: "كامادو نيزوكو", mbti: "ISFP", desc: "البريئة القوية", img: "https://via.placeholder.com/300/FF69B4/000000?text=Nezuko", scores: [30,40,45,98,70] },
+                    { name: "كوتشو شينوبو", mbti: "INTJ", desc: "الذكية اللطيفة", img: "https://via.placeholder.com/300/9370DB/FFFFFF?text=Shinobu", scores: [15,92,25,65,88] },
+                    { name: "كانروجي ميتسوري", mbti: "ENFP", desc: "العاطفية المرحة", img: "https://via.placeholder.com/300/FFB6C1/000000?text=Mitsuri", scores: [80,30,85,90,35] },
+                    { name: "شينازوغاوا كاناي", mbti: "INFJ", desc: "اللطيفة الحكيمة", img: "https://via.placeholder.com/300/DA70D6/000000?text=Kanae", scores: [25,85,35,92,85] },
+                    { name: "تسويوري كيوكو", mbti: "ISTJ", desc: "الجادة المنظمة", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=Kiyoko", scores: [15,80,20,75,90] },
+                    { name: "سوسامارو", mbti: "ESFP", desc: "الشرسة الوفية", img: "https://via.placeholder.com/300/DC143C/FFFFFF?text=Susamaru", scores: [88,10,90,65,20] },
+                    { name: "تاماي", mbti: "INTP", desc: "العالمة المنعزلة", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Tamayo", scores: [10,95,15,40,92] },
+                    { name: "أوي", mbti: "ISFJ", desc: "المساعدة الهادئة", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=Aoi", scores: [20,70,30,88,80] }
+                ]
+            },
+            "ديث نوت": {
+                male: [
+                    { name: "ياغامي لايت", mbti: "INTJ", desc: "العبقري المتلاعب", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Light", scores: [10,99,20,95,98] },
+                    { name: "إل لوليت", mbti: "INTP", desc: "المحقق الغريب", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=L", scores: [5,98,10,55,90] },
+                    { name: "ريوك", mbti: "ESTP", desc: "الشينجامي المرح", img: "https://via.placeholder.com/300/000000/FFFFFF?text=Ryuk", scores: [95,15,90,60,70] },
+                    { name: "ماتسودا توتا", mbti: "ESFP", desc: "المتحمس الساذج", img: "https://via.placeholder.com/300/FF8C00/000000?text=Matsuda", scores: [85,20,88,70,30] },
+                    { name: "ميلو", mbti: "ENTJ", desc: "الطموح العنيف", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Mello", scores: [70,80,85,90,20] },
+                    { name: "نير", mbti: "INTJ", desc: "الهادئ الذكي", img: "https://via.placeholder.com/300/708090/FFFFFF?text=Near", scores: [15,90,20,70,92] },
+                    { name: "أويزومي", mbti: "ESTJ", desc: "الصارم الرسمي", img: "https://via.placeholder.com/300/191970/FFFFFF?text=Aizawa", scores: [40,75,50,65,45] },
+                    { name: "ميكامي تيرو", mbti: "INFJ", desc: "المتعصب المثالي", img: "https://via.placeholder.com/300/DC143C/FFFFFF?text=Mikami", scores: [30,85,45,80,80] }
+                ],
+                female: [
+                    { name: "أماني ميسا", mbti: "ESFP", desc: "العاشقة المخلصة", img: "https://via.placeholder.com/300/FF69B4/000000?text=Misa", scores: [90,5,95,80,20] },
+                    { name: "ريم", mbti: "ISFJ", desc: "الحامية الوفية", img: "https://via.placeholder.com/300/DA70D6/000000?text=Rem", scores: [20,70,35,95,75] },
+                    { name: "كيومي تاكادا", mbti: "ENTJ", desc: "الطموحة الذكية", img: "https://via.placeholder.com/300/B8860B/000000?text=Takada", scores: [65,88,70,85,40] },
+                    { name: "سايامي", mbti: "ISTJ", desc: "الهادئة الجادة", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=Sayu", scores: [20,75,25,65,88] }
+                ]
+            },
+            "هنتر × هنتر": {
+                male: [
+                    { name: "غون فريكس", mbti: "ESFP", desc: "الفضولي النقي", img: "https://via.placeholder.com/300/32CD32/000000?text=Gon", scores: [92,10,95,80,30] },
+                    { name: "كيلوا زولديك", mbti: "ENTP", desc: "المرح العبقري", img: "https://via.placeholder.com/300/9370DB/FFFFFF?text=Killua", scores: [85,90,90,65,25] },
+                    { name: "كورابيكا", mbti: "INTJ", desc: "المنتقم الحازم", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Kurapika", scores: [15,95,25,88,92] },
+                    { name: "ليوريو", mbti: "ESTJ", desc: "الطيب العملي", img: "https://via.placeholder.com/300/FFD700/000000?text=Leorio", scores: [70,45,80,80,35] },
+                    { name: "هيسوكا", mbti: "ESTP", desc: "المقاتل الماكر", img: "https://via.placeholder.com/300/FF4500/000000?text=Hisoka", scores: [90,60,92,70,15] },
+                    { name: "كرولو لوسيلفر", mbti: "INTJ", desc: "الزعيم الهادئ", img: "https://via.placeholder.com/300/191970/FFFFFF?text=Chrollo", scores: [10,95,15,85,95] },
+                    { name: "إيلومي زولديك", mbti: "ISTJ", desc: "البارد المنظم", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=Illumi", scores: [5,75,10,90,90] },
+                    { name: "نيتيرو", mbti: "ENTJ", desc: "الحكيم القوي", img: "https://via.placeholder.com/300/B8860B/000000?text=Netero", scores: [50,80,70,95,60] }
+                ],
+                female: [
+                    { name: "بيسكي", mbti: "ESFJ", desc: "المدربة الحنونة", img: "https://via.placeholder.com/300/FFB6C1/000000?text=Biscuit", scores: [75,40,85,90,30] },
+                    { name: "ماشي", mbti: "ISTP", desc: "الهادئة الحادة", img: "https://via.placeholder.com/300/4B0082/FFFFFF?text=Machi", scores: [15,30,55,92,88] },
+                    { name: "باكينودا", mbti: "ESTP", desc: "المندفعة القوية", img: "https://via.placeholder.com/300/FF0000/FFFFFF?text=Pakunoda", scores: [80,25,88,75,40] },
+                    { name: "شيزوكو", mbti: "ISFJ", desc: "الناسية اللطيفة", img: "https://via.placeholder.com/300/4682B4/FFFFFF?text=Shizuku", scores: [30,70,35,88,78] }
+                ]
+            },
+            "فيري تيل": {
+                male: [
+                    { name: "ناتسو دراغنيل", mbti: "ESFP", desc: "الناري الشجاع", img: "https://via.placeholder.com/300/FF4500/000000?text=Natsu", scores: [95,5,98,85,20] },
+                    { name: "غراي فولباستر", mbti: "ISTP", desc: "البارد المخلص", img: "https://via.placeholder.com/300/00BFFF/000000?text=Gray", scores: [35,25,65,95,80] },
+                    { name: "إيرزا سكارليت", mbti: "ESTJ", desc: "القائدة الصارمة", img: "https://via.placeholder.com/300/FF1493/FFFFFF?text=Erza", scores: [45,80,85,90,30] },
+                    { name: "لوكي", mbti: "ENTP", desc: "اللاعب الذكي", img: "https://via.placeholder.com/300/FFD700/000000?text=Loke", scores: [80,75,88,60,25] },
+                    { name: "ماكاروف", mbti: "ENFJ", desc: "الأب الحكيم", img: "https://via.placeholder.com/300/708090/FFFFFF?text=Makarov", scores: [60,85,75,95,60] },
+                    { name: "غيلدارتس", mbti: "ENTJ", desc: "المغامر القوي", img: "https://via.placeholder.com/300/8B0000/FFFFFF?text=Gildarts", scores: [80,40,90,88,15] },
+                    { name: "جلال", mbti: "INFJ", desc: "الغامض النبيل", img: "https://via.placeholder.com/300/2E8B57/FFFFFF?text=Jellal", scores: [25,85,35,80,88] },
+                    { name: "لاكسوس", mbti: "ESTJ", desc: "المتكبر القوي", img: "https://via.placeholder.com/300/FFD700/000000?text=Laxus", scores: [70,45,88,92,15] }
+                ],
+                female: [
+                    { name: "لوسي هارتفيليا", mbti: "ENFJ", desc: "الكاتبة الحالمة", img: "https://via.placeholder.com/300/FFD700/000000?text=Lucy", scores: [75,55,80,95,40] },
+                    { name: "جوفيا", mbti: "ISFJ", desc: "العاشقة الوفية", img: "https://via.placeholder.com/300/1E90FF/FFFFFF?text=Juvia", scores: [30,80,40,98,70] },
+                    { name: "ويندي", mbti: "INFP", desc: "اللطيفة الخجولة", img: "https://via.placeholder.com/300/98FB98/000000?text=Wendy", scores: [20,85,30,90,80] },
+                    { name: "ميراجين", mbti: "ESFJ", desc: "المرحة الحنونة", img: "https://via.placeholder.com/300/FF69B4/000000?text=Mirajane", scores: [85,30,88,85,25] }
+                ]
+            },
+            "سباي × فاميلي": {
+                male: [
+                    { name: "لويد فورجر", mbti: "ISTJ", desc: "الجاسوس الكفؤ", img: "https://via.placeholder.com/300/2F4F4F/FFFFFF?text=Loid", scores: [20,90,30,95,88] },
+                    { name: "يوري بريار", mbti: "ESFJ", desc: "الحامي الغيور", img: "https://via.placeholder.com/300/228B22/FFFFFF?text=Yuri", scores: [70,50,80,92,25] },
+                    { name: "فرانكي فرانكلين", mbti: "ENTP", desc: "المخبر العبقري", img: "https://via.placeholder.com/300/FF4500/FFFFFF?text=Franky", scores: [75,88,85,60,30] },
+                    { name: "دونوفان ديزموند", mbti: "INTJ", desc: "الزعيم الغامض", img: "https://via.placeholder.com/300/191970/FFFFFF?text=Donovan", scores: [10,95,15,80,92] }
+                ],
+                female: [
+                    { name: "يور فورجر", mbti: "INFJ", desc: "القاتلة الحنونة", img: "https://via.placeholder.com/300/FF1493/000000?text=Yor", scores: [30,85,40,95,85] },
+                    { name: "آنيا فورجر", mbti: "ENFP", desc: "الطفلة المرحة", img: "https://via.placeholder.com/300/FF69B4/000000?text=Anya", scores: [85,15,95,80,15] },
+                    { name: "سيلفيا شيروود", mbti: "ENTJ", desc: "الرئيسة الحازمة", img: "https://via.placeholder.com/300/B8860B/000000?text=Sylvia", scores: [45,90,75,85,50] },
+                    { name: "بيكي بلاكبيل", mbti: "ESFP", desc: "المدللة الاجتماعية", img: "https://via.placeholder.com/300/FFB6C1/000000?text=Becky", scores: [90,10,92,65,20] }
+                ]
+            }
+        };
+
+        // أسئلة نمط MBTI (20 سؤال)
+        const questions = [
+            { text: "بعد يوم طويل ومرهق، أفضل طريقة لاستعادة طاقتي هي:", options: [
+                { text: "الخروج مع الأصدقاء والاستمتاع", scores: [2,0,2,1,-1] },
+                { text: "البقاء وحيدًا مع كتاب أو فيلم هادئ", scores: [-1,1,-1,1,2] },
+                { text: "ممارسة الرياضة أو نشاط بدني", scores: [1,-1,1,0,0] },
+                { text: "التخطيط لليوم التالي بدقة", scores: [0,2,0,0,1] }
+            ]},
+            { text: "عندما أواجه مشكلة صعبة، أفضل:", options: [
+                { text: "التحدث عنها مع المقربين لأخذ النصيحة", scores: [1,-1,1,2,0] },
+                { text: "تحليلها بهدوء بمفردي", scores: [-1,2,-1,0,2] },
+                { text: "التصرف بسرعة لحلها فورًا", scores: [2,0,2,0,-1] },
+                { text: "تأجيلها قليلاً حتى تهدأ مشاعري", scores: [0,1,0,1,1] }
+            ]},
+            { text: "في العمل الجماعي، أنا عادةً:", options: [
+                { text: "آخذ زمام المبادرة وأقود الفريق", scores: [2,0,2,0,0] },
+                { text: "أخطط لكل خطوة وأوزع المهام", scores: [0,2,0,1,1] },
+                { text: "أهتم بمشاعر الجميع وأحافظ على الانسجام", scores: [0,0,0,2,1] },
+                { text: "أعمل بصمت وأنجز الجزء الخاص بي", scores: [-1,1,-1,0,2] }
+            ]},
+            { text: "أكثر شيء يضايقني:", options: [
+                { text: "الظلم والقوانين غير العادلة", scores: [1,0,1,2,-1] },
+                { text: "الفوضى وعدم التنظيم", scores: [0,2,0,1,1] },
+                { text: "الوحدة والعزلة الطويلة", scores: [2,-1,2,0,-1] },
+                { text: "الضغط النفسي والدراما", scores: [0,1,0,0,2] }
+            ]},
+            { text: "عند التعرف على شخص جديد، أنا:", options: [
+                { text: "أبدأ الحديث بحماس وأسأل كثيرًا", scores: [2,0,2,1,0] },
+                { text: "أستمع أكثر مما أتحدث", scores: [-1,1,-1,1,1] },
+                { text: "أراقب تصرفاته قبل الانفتاح", scores: [0,2,0,0,2] },
+                { text: "أبحث عن اهتمامات مشتركة بسرعة", scores: [1,0,1,2,0] }
+            ]},
+            { text: "في عطلة نهاية الأسبوع، أفضل:", options: [
+                { text: "الخروج في مغامرة أو نشاط جديد", scores: [2,-1,2,0,-1] },
+                { text: "البقاء في المنزل والاسترخاء", scores: [-1,1,-1,1,2] },
+                { text: "تنظيم المنزل وإنهاء المهام المؤجلة", scores: [0,2,0,1,1] },
+                { text: "لقاء الأصدقاء والعائلة", scores: [1,0,1,2,0] }
+            ]},
+            { text: "عند قراءة كتاب أو مشاهدة فيلم، الأهم بالنسبة لي:", options: [
+                { text: "الإثارة والمغامرة", scores: [2,0,2,0,-1] },
+                { text: "الغموض والتحليل الذكي", scores: [0,2,-1,0,2] },
+                { text: "العلاقات الإنسانية والمشاعر", scores: [0,0,0,2,1] },
+                { text: "النهاية المرضية والمنطقية", scores: [0,1,0,1,1] }
+            ]},
+            { text: "تحت الضغط، أنا:", options: [
+                { text: "أصبح أكثر تركيزًا وإنتاجية", scores: [1,2,1,0,1] },
+                { text: "أشعر بالتوتر لكني أخفيه", scores: [0,0,-1,1,2] },
+                { text: "أطلب المساعدة أو الدعم", scores: [1,-1,1,2,0] },
+                { text: "أنفجر غضبًا أحيانًا", scores: [2,0,2,0,-2] }
+            ]},
+            { text: "معظم أصدقائي يصفونني بأني:", options: [
+                { text: "حيوي ومليء بالطاقة", scores: [2,0,2,0,0] },
+                { text: "حكيم وذكي", scores: [0,2,-1,0,2] },
+                { text: "مخلص وداعم", scores: [0,0,0,2,1] },
+                { text: "منظم وعملي", scores: [0,2,0,1,1] }
+            ]},
+            { text: "عندما يتغير شيء في روتيني فجأة:", options: [
+                { text: "أتأقلم بسرعة وأستمتع بالتغيير", scores: [2,-1,2,0,-1] },
+                { text: "أشعر بالانزعاج وأحتاج وقتًا للتكيف", scores: [0,1,-1,0,2] },
+                { text: "أخطط من جديد بهدوء", scores: [0,2,0,1,1] },
+                { text: "أطلب مساعدة من حولي", scores: [1,0,0,2,0] }
+            ]},
+            { text: "أفضل هدية تصلني:", options: [
+                { text: "تذكرة سفر أو مغامرة", scores: [2,-1,2,0,-1] },
+                { text: "كتاب أو أداة تقنية", scores: [0,2,-1,0,2] },
+                { text: "شيء صنعه المهدي بنفسه", scores: [0,0,0,2,1] },
+                { text: "شيء عملي أحتاجه فعلاً", scores: [0,1,0,1,1] }
+            ]},
+            { text: "في المستقبل، أهم طموحاتي:", options: [
+                { text: "أن أصبح مشهورًا أو الأفضل في مجالي", scores: [2,0,2,1,0] },
+                { text: "أن أفهم العالم وأحقق اكتشافات", scores: [0,2,-1,0,2] },
+                { text: "أن أساعد الآخرين وأحدث تأثيرًا إيجابيًا", scores: [0,0,0,2,1] },
+                { text: "أن أعيش حياة مستقرة ومريحة", scores: [-1,1,-1,1,2] }
+            ]},
+            { text: "عند مقابلة شخص مختلف عني تمامًا:", options: [
+                { text: "أشعر بالفضول وأسأله عن حياته", scores: [2,0,2,1,0] },
+                { text: "أحلل شخصيته بصمت", scores: [0,2,-1,0,2] },
+                { text: "أحاول إيجاد أرضية مشتركة", scores: [1,0,0,2,1] },
+                { text: "أحافظ على مسافة حتى أثق به", scores: [-1,1,-1,0,2] }
+            ]},
+            { text: "أكبر مخاوفي:", options: [
+                { text: "أن أكون مقيدًا أو غير حر", scores: [2,0,2,0,-1] },
+                { text: "أن أفشل أو أكون غير كفؤ", scores: [0,2,0,0,2] },
+                { text: "أن أفقد أحبائي", scores: [0,0,0,2,1] },
+                { text: "أن أعيش في فوضى وعدم استقرار", scores: [0,1,-1,1,2] }
+            ]},
+            { text: "في جدال، أنا:", options: [
+                { text: "أدافع عن رأيي بقوة", scores: [2,0,2,0,-1] },
+                { text: "أعتمد على المنطق والحقائق", scores: [0,2,-1,0,2] },
+                { text: "أحاول تهدئة الأجواء", scores: [0,0,0,2,1] },
+                { text: "أتجنب الجدال أساسًا", scores: [-1,1,-1,1,2] }
+            ]},
+            { text: "أفضل أنواع الموسيقى:", options: [
+                { text: "حماسية وصاخبة", scores: [2,0,2,0,-1] },
+                { text: "هادئة وتأملية", scores: [0,1,-1,0,2] },
+                { text: "عاطفية وذات كلمات مؤثرة", scores: [0,0,0,2,1] },
+                { text: "لا أهتم كثيرًا بالموسيقى", scores: [0,1,0,1,1] }
+            ]},
+            { text: "عندما أكون في مزاج سيء:", options: [
+                { text: "أمارس نشاطًا لتفريغ الطاقة", scores: [2,0,2,0,-1] },
+                { text: "أعزل نفسي وأفكر بهدوء", scores: [-1,2,-1,0,2] },
+                { text: "أتحدث مع صديق مقرب", scores: [1,0,1,2,0] },
+                { text: "أنشغل بأعمال منزلية أو تنظيم", scores: [0,1,0,1,2] }
+            ]},
+            { text: "أكثر ما يجذبني في شخصية الآخرين:", options: [
+                { text: "الشجاعة والصراحة", scores: [2,0,2,0,0] },
+                { text: "الذكاء والتحليل", scores: [0,2,-1,0,2] },
+                { text: "الطيبة والوفاء", scores: [0,0,0,2,1] },
+                { text: "الاتزان والهدوء", scores: [0,1,-1,1,2] }
+            ]},
+            { text: "مشروع جديد أمامي:", options: [
+                { text: "أبدأ فورًا بحماس", scores: [2,0,2,0,-1] },
+                { text: "أخطط لكل خطوة قبل البدء", scores: [0,2,-1,1,2] },
+                { text: "أستشير الآخرين أولاً", scores: [1,0,0,2,0] },
+                { text: "أفكر فيه طويلاً قبل التنفيذ", scores: [0,1,-1,0,2] }
+            ]},
+            { text: "أنظر للحياة بشكل عام:", options: [
+                { text: "مغامرة مليئة بالإمكانيات", scores: [2,0,2,1,-1] },
+                { text: "لغز يجب حله", scores: [0,2,-1,0,2] },
+                { text: "رحلة أشاركها مع من أحب", scores: [0,0,0,2,1] },
+                { text: "بحر يجب الإبحار فيه بحذر", scores: [-1,1,-1,1,2] }
+            ]}
+        ];
+
+        // تحويل MBTI
+        function calculateMBTI(scores) {
+            const O = scores[0], C = scores[1], E = scores[2], A = scores[3], N = scores[4];
+            let mbti = "";
+            mbti += (E >= 0) ? "E" : "I";
+            mbti += (O >= 0) ? "N" : "S";
+            mbti += (A >= 0) ? "F" : "T";
+            mbti += (C >= 0) ? "J" : "P";
+            return mbti;
+        }
+
+        // المسافة الإقليدية
+        function distance(a, b) {
+            return Math.sqrt(a.reduce((sum, val, i) => sum + Math.pow(val - b[i], 2), 0));
+        }
+
+        // حالة التطبيق
+        const state = {
+            step: 'anime', // 'anime', 'gender', 'quiz', 'result'
+            selectedAnime: null,
+            selectedGender: null,
+            currentQuestion: 0,
+            answers: [],
+            scores: [0,0,0,0,0]
+        };
+
+        const app = document.getElementById('app');
+
+        function render() {
+            app.innerHTML = '';
+            if (state.step === 'anime') renderAnimeSelection();
+            else if (state.step === 'gender') renderGenderSelection();
+            else if (state.step === 'quiz') renderQuiz();
+            else if (state.step === 'result') renderResult();
+        }
+
+        function renderAnimeSelection() {
+            const screen = document.createElement('div');
+            screen.className = 'screen active';
+            screen.innerHTML = `<h1>AnimeNexus</h1>
+                <h2>اختر عالم الأنمي</h2>
+                <div class="options-grid" id="anime-grid"></div>`;
+            const grid = screen.querySelector('#anime-grid');
+            for (let anime in animeData) {
+                const btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.textContent = anime;
+                btn.onclick = () => {
+                    state.selectedAnime = anime;
+                    state.step = 'gender';
+                    render();
+                };
+                grid.appendChild(btn);
+            }
+            app.appendChild(screen);
+        }
+
+        function renderGenderSelection() {
+            const screen = document.createElement('div');
+            screen.className = 'screen active';
+            screen.innerHTML = `<h2>اختر جنسك</h2>
+                <div class="flex-row">
+                    <button class="btn" id="male-btn">ذكر</button>
+                    <button class="btn" id="female-btn">أنثى</button>
+                </div>
+                <p style="text-align:center;color:#aaa;">العالم: ${state.selectedAnime}</p>`;
+            screen.querySelector('#male-btn').onclick = () => {
+                state.selectedGender = 'male';
+                startQuiz();
+            };
+            screen.querySelector('#female-btn').onclick = () => {
+                state.selectedGender = 'female';
+                startQuiz();
+            };
+            app.appendChild(screen);
+        }
+
+        function startQuiz() {
+            state.step = 'quiz';
+            state.currentQuestion = 0;
+            state.answers = [];
+            state.scores = [0,0,0,0,0];
+            render();
+        }
+
+        function renderQuiz() {
+            const q = questions[state.currentQuestion];
+            const screen = document.createElement('div');
+            screen.className = 'screen active';
+            const progress = ((state.currentQuestion / questions.length) * 100).toFixed(0);
+            screen.innerHTML = `
+                <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+                <div class="quiz-question">
+                    <div class="question-text">${state.currentQuestion + 1}. ${q.text}</div>
+                    <div class="options-grid">
+                        <button class="btn opt" data-idx="0">أ) ${q.options[0].text}</button>
+                        <button class="btn opt" data-idx="1">ب) ${q.options[1].text}</button>
+                        <button class="btn opt" data-idx="2">ج) ${q.options[2].text}</button>
+                        <button class="btn opt" data-idx="3">د) ${q.options[3].text}</button>
+                    </div>
+                </div>
+            `;
+            screen.querySelectorAll('.opt').forEach(btn => {
+                btn.onclick = () => {
+                    const idx = parseInt(btn.dataset.idx);
+                    const optScores = q.options[idx].scores;
+                    optScores.forEach((s, i) => state.scores[i] += s);
+                    state.answers.push(idx);
+                    if (state.currentQuestion < questions.length - 1) {
+                        state.currentQuestion++;
+                        render();
+                    } else {
+                        state.step = 'result';
+                        render();
+                    }
+                };
+            });
+            app.appendChild(screen);
+        }
+
+        function renderResult() {
+            const characters = animeData[state.selectedAnime][state.selectedGender];
+            let bestMatch = null, bestDist = Infinity;
+            characters.forEach(char => {
+                const dist = distance(state.scores, char.scores);
+                if (dist < bestDist) { bestDist = dist; bestMatch = char; }
+            });
+            const mbti = calculateMBTI(state.scores);
+            const screen = document.createElement('div');
+            screen.className = 'screen active';
+            screen.innerHTML = `
+                <h2>نتيجتك</h2>
+                <div class="result-card">
+                    <div class="mbti-badge">${mbti}</div>
+                    <p style="color:#ccc;">${bestMatch.desc}</p>
+                    <img src="${bestMatch.img}" alt="${bestMatch.name}" crossorigin="anonymous">
+                    <div class="character-name">${bestMatch.name}</div>
+                    <p>من عالم <strong>${state.selectedAnime}</strong></p>
+                    <button class="btn" id="restart-btn">🔁 إعادة الاختبار</button>
+                </div>
+            `;
+            screen.querySelector('#restart-btn').onclick = () => {
+                state.step = 'anime';
+                state.selectedAnime = null;
+                state.selectedGender = null;
+                state.scores = [0,0,0,0,0];
+                state.answers = [];
+                render();
+            };
+            app.appendChild(screen);
+        }
+
+        render();
+    </script>
 </body>
 </html>
