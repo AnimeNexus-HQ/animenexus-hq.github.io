@@ -490,7 +490,7 @@
             ]},
             { text: "عند قراءة كتاب أو مشاهدة فيلم، الأهم بالنسبة لي:", options: [
                 { text: "الإثارة والمغامرة", scores: [2,0,2,0,-1] },
-                { text: "الغموض والتحليل الذكي", scores: [0,2,-1,0,2] },
+                { text: "الغموض و النفسي", scores: [0,2,-1,0,2] },
                 { text: "العلاقات الإنسانية والمشاعر", scores: [0,0,0,2,1] },
                 { text: "النهاية المرضية والمنطقية", scores: [0,1,0,1,1] }
             ]},
@@ -544,7 +544,7 @@
             ]},
             { text: "أفضل أنواع الموسيقى:", options: [
                 { text: "حماسية وصاخبة", scores: [2,0,2,0,-1] },
-                { text: "هادئة وتأملية", scores: [0,1,-1,0,2] },
+                { text: "هادئة وحزينة", scores: [0,1,-1,0,2] },
                 { text: "عاطفية وذات كلمات مؤثرة", scores: [0,0,0,2,1] },
                 { text: "لا أهتم كثيرًا بالموسيقى", scores: [0,1,0,1,1] }
             ]},
@@ -668,7 +668,7 @@
                     <button class="btn" id="female-btn">أنثى</button>
                 </div>
                 <p style="text-align:center;color:#aaa;">العالم: ${state.selectedAnime}</p>
-                <input type="text" class="name-input" id="name-input" placeholder="اسمك (اختياري)" value="${userName}">`;
+                <input type="text" class="name-input" id="name-input" placeholder="اسمك (اختياري "ليس ضرورياً اسمك الحقيقي")" value="${userName}">`;
             screen.querySelector('#male-btn').onclick = () => {
                 userName = screen.querySelector('#name-input').value.trim();
                 state.selectedGender = 'male';
@@ -767,7 +767,7 @@
             const realDesc = mbtiRealDesc[mbti] || "شخصية فريدة";
             const serial = getNextSerial();
             const greeting = userName ? `أهلاً ${userName}، ` : "";
-            const shareText = `${greeting}🎭 نمط شخصيتي: ${mbti} (${realDesc})\nمن عالم ${state.selectedAnime} أشبه: ${bestMatch.name}\nبطاقة نتيجتي: #${serial}\nاكتشف شخصيتك: ${window.location.href}`;
+            const shareText = `${greeting} نمط شخصيتي: ${mbti} (${realDesc})\nمن عالم ${state.selectedAnime} أشبه: ${bestMatch.name}\nبطاقة نتيجتي: #${serial}\nاكتشف شخصيتك: ${window.location.href}`;
             const encodedShare = encodeURIComponent(shareText);
 
             const screen = document.createElement('div');
@@ -790,17 +790,17 @@
                     <img id="user-preview" style="width:80px;height:80px;border-radius:50%;object-fit:cover;display:none;margin:10px auto;border:2px solid #8b5cf6;">
 
                     <div class="share-buttons">
-                        <button class="share-btn" id="copy-btn">📋 نسخ</button>
-                        <a class="share-btn" href="https://wa.me/?text=${encodedShare}" target="_blank">💬 واتساب</a>
-                        <a class="share-btn" href="https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodedShare}" target="_blank">✈️ تلغرام</a>
-                        <a class="share-btn" href="https://twitter.com/intent/tweet?text=${encodedShare}" target="_blank">🐦 تويتر</a>
+                        <button class="share-btn" id="copy-btn"> نسخ</button>
+                        <a class="share-btn" href="https://wa.me/?text=${encodedShare}" target="_blank"> واتساب</a>
+                        <a class="share-btn" href="https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodedShare}" target="_blank"> تلغرام</a>
+                        <a class="share-btn" href="https://twitter.com/intent/tweet?text=${encodedShare}" target="_blank"> تويتر</a>
                     </div>
-                    <button class="btn small" id="download-card-btn" style="margin-top:15px;">🖼️ تحميل بطاقة النتيجة</button>
+                    <button class="btn small" id="download-card-btn" style="margin-top:15px;"> تحميل بطاقة النتيجة</button>
                     <div style="margin-top:20px;">
                         <a class="btn small" href="https://t.me/kiotaka4108" target="_blank">💬 تواصل معنا</a>
                     </div>
                 </div>
-                <button class="btn" id="restart-btn" style="margin-top:25px;">🔁 إعادة الاختبار</button>`;
+                <button class="btn" id="restart-btn" style="margin-top:25px;"> إعادة الاختبار</button>`;
 
             screen.querySelector('#copy-btn').onclick = () => {
                 navigator.clipboard.writeText(shareText).then(() => alert('تم نسخ النتيجة!'));
